@@ -1,0 +1,56 @@
+{
+  "id": "sample string 1",
+  "sessionName": "sample string 2",
+  "decisionArray": [
+    {
+      "id": "sample string 1",
+      "name": "sample string 2",
+      "finalRate": 3.1,
+      "criteriaArray": [
+        {
+          "id": "sample string 1",
+          "name": "sample string 2",
+          "rate": 3,
+          "value": "sample string 4",
+          "valueRate": 5,
+          "criterionPriority": 6.1,
+          "valuePriority": 7.1
+        },
+        {
+          "id": "sample string 1",
+          "name": "sample string 2",
+          "rate": 3,
+          "value": "sample string 4",
+          "valueRate": 5,
+          "criterionPriority": 6.1,
+          "valuePriority": 7.1
+        }
+      ]
+    },
+    {
+      "id": "sample string 1",
+      "name": "sample string 2",
+      "finalRate": 3.1,
+      "criteriaArray": [
+        {
+          "id": "sample string 1",
+          "name": "sample string 2",
+          "rate": 3,
+          "value": "sample string 4",
+          "valueRate": 5,
+          "criterionPriority": 6.1,
+          "valuePriority": 7.1
+        },
+        {
+          "id": "sample string 1",
+          "name": "sample string 2",
+          "rate": 3,
+          "value": "sample string 4",
+          "valueRate": 5,
+          "criterionPriority": 6.1,
+          "valuePriority": 7.1
+        }
+      ]
+    }
+  ]
+}

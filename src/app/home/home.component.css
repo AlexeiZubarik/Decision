@@ -1,0 +1,21 @@
+header {
+  height: 300px;
+  margin-bottom: 40px;
+  background: #673ab7;
+  padding-left: auto;
+  padding-right: auto;
+}
+
+.docs-header-section {
+  text-align: center;
+  padding-top: 60px;
+}
+
+.docs-header-headline {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.docs-header-start {
+  text-align: center;
+  margin: 20px;
+}
