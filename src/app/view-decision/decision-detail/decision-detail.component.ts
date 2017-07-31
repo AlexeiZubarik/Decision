@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Decision } from "app/shared/decision";
+import { Decision, DecisionArray, CriteriaArray } from 'app/shared/decision';
 
 import { DecisionService } from 'app/services/decision.service';
 
@@ -13,18 +13,19 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./decision-detail.component.css']
 })
 export class DecisionDetailComponent implements OnInit {
+  @Input() decision: Decision;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private decisionService: DecisionService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    // this.route.paramMap
-    //   .switchMap((params: ParamMap) =>
-    //     this.decisionService.getDecision(params.get('id')))
-    //   .subsribe((decision: Decision) => this.decision = decision);
+    this.route.paramMap
+      .switchMap((params: ParamMap) =>
+        // tslint:disable-next-line:radix
+        this.decisionService.getDecision( +params.get('id')) )
+      .subscribe( decision => this.decision = decision );
   }
-
 }

@@ -2,7 +2,7 @@ export class Decision {
   id: number;
 
   constructor(
-    public title: string, 
+    public title: string,
     public decisionArray: DecisionArray[] = []
   ) {}
 }
@@ -14,7 +14,7 @@ export class DecisionArray {
     public name: string = '',
     public finalRate: number = 1,
     public criteriaArray: CriteriaArray[] = []
-  ) {}  
+  ) {}
 }
 
 export class CriteriaArray {
@@ -28,5 +28,5 @@ export class CriteriaArray {
     public criterionPriority: number = 1,
     public valuePriority: number = 1
   ) {}
-
+// tslint:disable-next-line:eofline
 }

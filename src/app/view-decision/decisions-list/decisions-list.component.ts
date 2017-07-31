@@ -14,18 +14,18 @@ export class DecisionsListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private decisionService: DecisionService) { 
+    private decisionService: DecisionService) {
     this.decisions = [];
   }
 
   ngOnInit() {
-    this.decisionService.getDecisions().then(decisions => this.decisions = decisions)
+    this.decisionService.getDecisions().then(decisions => this.decisions = decisions);
   }
 
   onSelect(decision: Decision) {
     this.router.navigate(['/viewdecision/decision', decision.id]);
   }
-  
+
   delete(decision: Decision) {
     this.decisionService.deleteDecision(decision);
   }

@@ -1,7 +1,13 @@
- <md-toolbar color="primary">
+<div>
+  <md-toolbar color="primary">
     <header>
       <h1>{{ title }}</h1>
     </header>
   </md-toolbar>
+  <div style="margin-bottom: 30px;">
+    <router-outlet></router-outlet>
+  </div>
+  
 
-  <router-outlet></router-outlet>
+  <button md-raised-button (click)="goBack()">BACK</button>
+</div> 

@@ -29,10 +29,11 @@ export class DecisionService {
       .get(url)
       .toPromise()
       .then(response => response.json().data as Decision)
+      .then(decisions => this.decisions.find(decision => decision.id === id))
       .catch(this.handleError);
   }
 
-  update(decision: Decision): Promise<Decision>{    
+  update(decision: Decision): Promise<Decision> {
     const url = `${this.apiUrl}/${decision.id}`;
 
     return this.http
@@ -66,7 +67,7 @@ export class DecisionService {
       .then(response => {
         let index = this.decisions.indexOf(decision);
                
-        if(index > -1) {
+        if (index > -1) {
           this.decisions.splice(index, 1);
         }
       })

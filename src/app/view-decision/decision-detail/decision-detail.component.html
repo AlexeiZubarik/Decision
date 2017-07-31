@@ -1,3 +1,26 @@
-<p>
-  decision-detail works!
-</p>
+<div *ngIf="decision">
+  <p>{{ decision.id }}</p>
+  <h3>{{ decision.title }} detalis!</h3>  
+
+  <table *ngFor="let decisionArray of decision.decisionArray">
+    <tr>
+      <td>{{ decisionArray.id }}</td>
+      <td>{{ decisionArray.name }}</td>
+      <td>{{ decisionArray.finalRate }}</td>
+      <td>/</td>
+      <td>/</td>
+      <td>/</td>
+      <td>/</td>
+    </tr>
+    <tr *ngFor="let criteriaArray of decisionArray.criteriaArray">
+      <td>{{ criteriaArray.id }}</td>
+      <td>{{ criteriaArray.name }}</td>
+      <td>{{ criteriaArray.rate }}</td>
+      <td>{{ criteriaArray.value }}</td>
+      <td>{{ criteriaArray.valueRate }}</td>
+      <td>{{ criteriaArray.criterionPriority }}</td>
+      <td>{{ criteriaArray.valuePriority }}</td>
+    </tr>
+  </table>
+
+</div>

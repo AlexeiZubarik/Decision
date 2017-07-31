@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./view-decision.component.css']
 })
 export class ViewDecisionComponent implements OnInit {
-  title = "View Decision";
+  title = 'View Decision';
 
   constructor(
     private router: Router,
@@ -18,8 +18,7 @@ export class ViewDecisionComponent implements OnInit {
   goBack() {
     this.location.back();
   }
-  
-  ngOnInit() {
-  }
+
+  ngOnInit() {}
 
 }
