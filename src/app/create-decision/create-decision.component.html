@@ -23,7 +23,7 @@
           <button md-raised-button (click)="goBack()">CANCEL</button>
         </td>
         <td>
-          <button md-raised-button type="submit" [disabled]="decisionForm.form.invalid">CONFIRM</button>
+          <button md-raised-button type="submit" [disabled]="decisionForm.form.invalid" (click)="goNext()">CONFIRM</button>
         </td>
       </tr>
     </table>    

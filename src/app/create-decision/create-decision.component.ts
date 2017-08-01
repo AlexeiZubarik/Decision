@@ -28,7 +28,7 @@ export class CreateDecisionComponent implements OnInit {
   }
 
   goNext() {
-    this.router.navigate(['viewdecision']);
+    this.router.navigate(['createalternative']);
   }
   
   ngOnInit() {

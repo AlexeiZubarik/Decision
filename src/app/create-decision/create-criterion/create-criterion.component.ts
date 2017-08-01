@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-criterion',
@@ -6,10 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-criterion.component.css']
 })
 export class CreateCriterionComponent implements OnInit {
+  title = 'Create Criterion';
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private location: Location
+  ) { }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  goNext() {
+    this.router.navigate(['']);
   }
 
 }

@@ -1,3 +1,8 @@
-<p>
-  create-criterion works!
-</p>
+<md-toolbar color="primary">
+  <header>
+    <h1>{{ title }}</h1>
+  </header>
+</md-toolbar>
+
+<button md-raised-button (click)="goBack()">CANCEL</button>
+<button md-raised-button type="submit" (click)="goNext()">CONFIRM</button>

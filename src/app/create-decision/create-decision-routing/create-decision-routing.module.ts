@@ -7,7 +7,8 @@ import { CreateAlternativeComponent } from 'app/create-decision/create-alternati
 
 const createDecisionRoutes: Routes = [
   { path: 'createdecision', component: CreateDecisionComponent },
-  //{ path: 'decision/:id', component: CreateCriterionComponent }
+  { path: 'createalternative', component: CreateAlternativeComponent },
+  { path: 'createcriterion', component: CreateCriterionComponent}
 ];
 
 @NgModule({

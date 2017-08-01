@@ -80,4 +80,5 @@ export class DecisionService {
     console.error('Произошла ошибка', error);
     return Promise.reject(error.message || error);
   }
+
 }

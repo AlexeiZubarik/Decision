@@ -1,8 +1,11 @@
 <div *ngIf="decision">
-  <p>{{ decision.id }}</p>
-  <h3>{{ decision.title }} detalis!</h3>  
+  <h3 class="mat-display-1">{{ decision.title }} detalis!</h3>  
 
-  <table *ngFor="let decisionArray of decision.decisionArray">
+  <md-table>
+
+  </md-table>
+  
+   <table *ngFor="let decisionArray of decision.decisionArray">
     <tr>
       <td>{{ decisionArray.id }}</td>
       <td>{{ decisionArray.name }}</td>
@@ -21,6 +24,6 @@
       <td>{{ criteriaArray.criterionPriority }}</td>
       <td>{{ criteriaArray.valuePriority }}</td>
     </tr>
-  </table>
+  </table> 
 
 </div>
