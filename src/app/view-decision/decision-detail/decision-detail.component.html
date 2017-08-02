@@ -1,11 +1,7 @@
 <div *ngIf="decision">
   <h3 class="mat-display-1">{{ decision.title }} detalis!</h3>  
 
-  <md-table>
-
-  </md-table>
-  
-   <table *ngFor="let decisionArray of decision.decisionArray">
+  <table *ngFor="let decisionArray of decision.decisionArray">
     <tr>
       <td>{{ decisionArray.id }}</td>
       <td>{{ decisionArray.name }}</td>

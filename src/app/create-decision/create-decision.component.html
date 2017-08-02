@@ -4,8 +4,6 @@
   </header>
 </md-toolbar>
 
-<div class="center-section">
-  <div>
   <form class="example-form" (ngSubmit)="create(); decisionForm.reset()" #decisionForm="ngForm">
     <table class="example-full-width" cellspacing=20>
       <tr>
@@ -15,24 +13,19 @@
           </md-input-container>
         </td>
         <td>
-          <!-- <button md-button type="submit" [disabled]="decisionForm.form.invalid">Add</button> -->
+          <button md-button type="submit" [disabled]="decisionForm.form.invalid">Add</button>
         </td>
-      </tr>
-      <tr>
-        <td>
-          <button md-raised-button (click)="goBack()">CANCEL</button>
-        </td>
-        <td>
-          <button md-raised-button type="submit" [disabled]="decisionForm.form.invalid" (click)="goNext()">CONFIRM</button>
-        </td>
-      </tr>
+      </tr>     
     </table>    
   </form>
-
-  <table cellspacing=20>
-    <tr>
-      
-    </tr>
-  </table>
-  </div>
-</div>
+  
+<table class="example-full-width" cellspacing=20>
+  <tr>
+    <td>
+      <button md-raised-button (click)="goBack()">CANCEL</button>
+    </td>
+    <td>
+      <button md-raised-button type="submit" (click)="goNext()">CONFIRM</button>
+    </td>
+  </tr>
+</table>

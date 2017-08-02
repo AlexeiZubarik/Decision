@@ -19,7 +19,7 @@ export class CreateDecisionComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    private decisionService: DecisionService) { 
+    private decisionService: DecisionService) {
     this.decisions = [];
   }
 
@@ -30,13 +30,13 @@ export class CreateDecisionComponent implements OnInit {
   goNext() {
     this.router.navigate(['createalternative']);
   }
-  
+
   ngOnInit() {
-    this.decisionService.getDecisions().then(decisions => this.decisions = decisions)
+    this.decisionService.getDecisions().then(decisions => this.decisions = decisions);
   }
 
   create() {
     this.decisionService.createDecision(this.newDecisionTitle);
-  } 
+  }
 
 }
