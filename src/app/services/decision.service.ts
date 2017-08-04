@@ -43,10 +43,9 @@ export class DecisionService {
       .catch(this.handleError);
   }
 
-  createDecision(title: string) {
+  createDecision(decision: Decision) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers });
-    let decision = new Decision(title);
 
     this.http
       .post(this.apiUrl, decision, options)
@@ -66,7 +65,7 @@ export class DecisionService {
       .toPromise()
       .then(response => {
         let index = this.decisions.indexOf(decision);
-               
+
         if (index > -1) {
           this.decisions.splice(index, 1);
         }

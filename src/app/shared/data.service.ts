@@ -243,6 +243,4 @@ export class InMemoryDataService implements InMemoryDbService {
 
     return { decisions };
   }
-
-// tslint:disable-next-line:eofline
 }

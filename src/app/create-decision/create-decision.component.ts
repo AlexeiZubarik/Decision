@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { Decision } from '../shared/decision';
 
 import { DecisionService } from '../services/decision.service';
+import { CreateDecisionService } from './shared/create-decision.service';
 
 @Component({
   selector: 'app-create-decision',
@@ -19,16 +20,9 @@ export class CreateDecisionComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    private decisionService: DecisionService) {
+    private decisionService: DecisionService,
+    private createDecisionService: CreateDecisionService) {
     this.decisions = [];
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  goNext() {
-    this.router.navigate(['createalternative']);
   }
 
   ngOnInit() {
@@ -36,7 +30,16 @@ export class CreateDecisionComponent implements OnInit {
   }
 
   create() {
-    this.decisionService.createDecision(this.newDecisionTitle);
+    this.createDecisionService.createTitleDecision(this.newDecisionTitle);
+  }
+
+  goBack(): void {
+    this.location.back();
+    this.createDecisionService.titleDecision = null;
+  }
+
+  goNext() {
+    this.router.navigate(['createalternative']);
   }
 
 }

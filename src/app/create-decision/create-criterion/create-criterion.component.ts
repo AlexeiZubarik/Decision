@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { Decision, CriteriaArray } from 'app/shared/decision';
 
 import { DecisionService } from 'app/services/decision.service';
+import { CreateDecisionService } from '../shared/create-decision.service';
 
 @Component({
   selector: 'app-create-criterion',
@@ -13,38 +14,27 @@ import { DecisionService } from 'app/services/decision.service';
 })
 export class CreateCriterionComponent implements OnInit {
   title = 'Create Criterion';
-  newCriterion: string = '';
-
-  criteriaArray: CriteriaArray[] = [
-    {
-      id: 1,
-      name: 'Criteria 1',
-      rate: 1,
-      value: '',
-      valueRate: 1,
-      criterionPriority: 1,
-      valuePriority: 1
-    },
-    {
-      id: 2,
-      name: 'Criteria 2',
-      rate: 1,
-      value: '',
-      valueRate: 1,
-      criterionPriority: 1,
-      valuePriority: 1
-    },
-  ];
+  newCriteriaName: string = '';
+  criteriaArray: CriteriaArray[];
 
   constructor(
     private router: Router,
-    private location: Location
-  ) { }
-
-  ngOnInit() {
+    private location: Location,
+    private createDecisionService: CreateDecisionService) {
+    this.criteriaArray =[];
   }
 
-  delete(criteria: CriteriaArray) {}
+  ngOnInit() {
+    this.criteriaArray = this.createDecisionService.getCriteriaArray();
+  }
+
+  delete(criteria: CriteriaArray) {
+    this.createDecisionService.deleteCriteria(criteria);
+  }
+
+  create() {
+    this.createDecisionService.createCriteria(this.newCriteriaName);
+  }
 
   goBack(): void {
     this.location.back();
@@ -52,6 +42,9 @@ export class CreateCriterionComponent implements OnInit {
 
   goNext() {
     this.router.navigate(['']);
-  }
 
+    if (this.createDecisionService.titleDecision){
+      this.createDecisionService.createDecision();
+    }
+  }
 }

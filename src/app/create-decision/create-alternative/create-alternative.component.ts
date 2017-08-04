@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { Decision, DecisionArray } from 'app/shared/decision';
 
 import { DecisionService } from 'app/services/decision.service';
+import { CreateDecisionService } from '../shared/create-decision.service';
 
 @Component({
   selector: 'app-create-alternative',
@@ -13,38 +14,27 @@ import { DecisionService } from 'app/services/decision.service';
 })
 export class CreateAlternativeComponent implements OnInit {
   title = 'Create Alternative';
-  newAlternative: string = '';
-
-  decisionArray: DecisionArray[] = [
-    {
-      id: 1,
-      name: 'Alternative 1',
-      finalRate: 1,
-      criteriaArray: []
-    },
-    {
-      id: 2,
-      name: 'Alternative 2',
-      finalRate: 1,
-      criteriaArray: []
-    },
-    {
-      id: 3,
-      name: 'Alternative 3',
-      finalRate: 1,
-      criteriaArray: []
-    },
-  ];
+  newAlternativeName = '';
+  decisionArray: DecisionArray[];
 
   constructor(
     private router: Router,
-    private location: Location
-  ) { }
-
-  ngOnInit() {
+    private location: Location,
+    private createDecisionService: CreateDecisionService) {
+    this.decisionArray = [];
   }
 
-  delete(alternative: DecisionArray) {}
+  ngOnInit() {
+    this.decisionArray = this.createDecisionService.getDecisionArray();
+  }
+
+  delete(alternative: DecisionArray) {
+    this.createDecisionService.deleteAlternative(alternative);
+  }
+
+  create() {
+    this.createDecisionService.createAlternative(this.newAlternativeName);
+  }
 
   goBack(): void {
     this.location.back();

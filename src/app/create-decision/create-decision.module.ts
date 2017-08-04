@@ -9,6 +9,7 @@ import { CreateAlternativeComponent } from './create-alternative/create-alternat
 import { MyMaterialModule } from '../modules/my-material.module';
 
 import { DecisionService } from '../services/decision.service';
+import { CreateDecisionService } from './shared/create-decision.service';
 
 import { CreateDecisionRoutingModule } from './create-decision-routing/create-decision-routing.module';
 
@@ -24,6 +25,9 @@ import { CreateDecisionRoutingModule } from './create-decision-routing/create-de
     CreateCriterionComponent,
     CreateAlternativeComponent
   ],
-  providers: [DecisionService]
+  providers: [
+    DecisionService,
+    CreateDecisionService
+  ]
 })
 export class CreateDecisionModule { }
