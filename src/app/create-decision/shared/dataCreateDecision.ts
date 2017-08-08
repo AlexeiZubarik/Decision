@@ -36,7 +36,7 @@ export const decisionArray = [
       name: 'Criteria 2',
       rate: 1,
       value: '',
-      valueRate: 1,
+      valueRate: 2,
       criterionPriority: 1,
       valuePriority: 1
     },

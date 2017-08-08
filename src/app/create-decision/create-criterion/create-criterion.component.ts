@@ -20,8 +20,9 @@ export class CreateCriterionComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
+    private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService) {
-    this.criteriaArray =[];
+    this.criteriaArray = [];
   }
 
   ngOnInit() {
@@ -41,9 +42,9 @@ export class CreateCriterionComponent implements OnInit {
   }
 
   goNext() {
-    this.router.navigate(['']);
+    this.router.navigate(['addvaluecriterion']);
 
-    if (this.createDecisionService.titleDecision){
+    if (this.createDecisionService.titleDecision) {
       this.createDecisionService.createDecision();
     }
   }

@@ -14,7 +14,7 @@ const viewDecisionRouting: Routes = [
         component: DecisionsListComponent
       },
       {
-        path: 'decision/:id',
+        path: ':id',
         component: DecisionDetailComponent
       }
     ]}

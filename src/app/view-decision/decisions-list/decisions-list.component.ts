@@ -23,7 +23,7 @@ export class DecisionsListComponent implements OnInit {
   }
 
   onSelect(decision: Decision) {
-    this.router.navigate(['/viewdecision/decision', decision.id]);
+    this.router.navigate(['/viewdecision/', decision.id]);
   }
 
   delete(decision: Decision) {

@@ -8,10 +8,15 @@ import { DecisionService } from 'app/services/decision.service';
 @Injectable()
 export class CreateDecisionService {
   titleDecision: string;
+  decision: Decision;
   decisionArray: DecisionArray[] = decisionArray;
   citeriaArray: CriteriaArray[] = criteriaArray;
 
   constructor(private decisionService: DecisionService) { }
+
+  getDecision(): Decision {
+    return this.decision;
+  }
 
   getDecisionArray(): DecisionArray[] {
     return this.decisionArray;
@@ -26,12 +31,12 @@ export class CreateDecisionService {
   }
 
   createDecision() {
-    for(let alternative of decisionArray) {
+    for (let alternative of decisionArray) {
       alternative.criteriaArray = criteriaArray;
     }
 
-    let decision = new Decision(this.titleDecision, decisionArray);
-    this.decisionService.createDecision(decision);
+    this.decision = new Decision(this.titleDecision, decisionArray);
+    //this.decisionService.createDecision(decision);
   }
 
   createAlternative(name: string) {

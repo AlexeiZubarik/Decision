@@ -3,7 +3,7 @@ export class Decision {
 
   constructor(
     public title: string,
-    public decisionArray: DecisionArray[] = []
+    public decisionArray: DecisionArray[]
   ) {}
 }
 

@@ -1,0 +1,45 @@
+<md-toolbar color="primary">
+  <header>
+    <h1>{{ title }}</h1>
+  </header>
+</md-toolbar>
+
+ <table *ngIf="decision">
+  <thead>
+    <tr>
+      <th></th>
+      <th *ngFor="let criteria of criteriaArray">{{ criteria.name }}</th>
+    </tr>
+  </thead>
+  <tbody> 
+    <tr *ngFor="let alternative of decisionArray">
+      <td>{{ alternative.name }}</td>       
+      <td *ngFor="let criteria of alternative.criteriaArray">{{ criteria.valueRate}}</td> 
+    </tr> 
+  </tbody>   
+</table> 
+
+<table class="example-full-width" cellspacing=20>
+  <tr>
+    <td>
+      <button md-raised-button (click)="goCreateCriterion()">ADD CRITERIA</button>
+    </td>
+    <td>
+      <button md-raised-button (click)="goCreateAlternative()">ADD ALTERNATIVE</button>
+    </td>
+    <td>
+      <button md-raised-button (click)="saveDecision()">SAVE DECISION</button>
+    </td>
+  </tr>
+</table>
+
+<table class="example-full-width" cellspacing=20>
+  <tr>
+    <td>
+      <button md-raised-button (click)="goBack()">CANCEL</button>
+    </td>
+    <td>
+      <button md-raised-button (click)="goNext()">CONFIRM</button>
+    </td>
+  </tr>
+</table>
