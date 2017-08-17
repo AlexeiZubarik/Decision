@@ -1,10 +1,45 @@
-<md-nav-list *ngIf="decisions.length">
+<!-- <md-nav-list *ngIf="decisions.length">
   <h3 md-subheader>Decisions List</h3>
   <md-list-item (click)="onSelect(decision)" *ngFor="let decision of decisions">
     <h4 md-line>{{decision.title}}</h4>
     <p md-line>id: {{decision.id}}</p>
-    <button md-icon-button><md-icon>edit</md-icon></button> 
-    <button md-icon-button (click)="delete(decision)"><md-icon calss="exampple-icon">delete_forever</md-icon></button>    
+    <button md-icon-button><md-icon>edit</md-icon></button>
+    <button md-icon-button (click)="delete(decision)"><md-icon calss="exampple-icon">delete_forever</md-icon></button>
   </md-list-item>
   <md-divider></md-divider>
-</md-nav-list>
+</md-nav-list> -->
+
+<div class="example-container mat-elevation-z8">
+  <md-table #table [dataSource]="dataSource" mdSort (mdSortChange)="sortData($event)">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- ID Column -->
+    <ng-container cdkColumnDef="userId">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.id}} </md-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container cdkColumnDef="progress">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Progress </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.progress}}% </md-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container cdkColumnDef="userName">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container cdkColumnDef="color">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Color </md-header-cell>
+      <md-cell *cdkCellDef="let row" [style.color]="row.color"> {{row.color}} </md-cell>
+    </ng-container>
+
+    <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+  </md-table>
+</div>

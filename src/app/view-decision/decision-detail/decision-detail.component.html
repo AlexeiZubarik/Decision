@@ -1,25 +1,19 @@
 <div *ngIf="decision">
   <h3 class="mat-display-1">{{ decision.title }} detalis!</h3>  
 
-  <table *ngFor="let decisionArray of decision.decisionArray">
+<table>
+  <thead>
     <tr>
-      <td>{{ decisionArray.id }}</td>
-      <td>{{ decisionArray.name }}</td>
-      <td>{{ decisionArray.finalRate }}</td>
-      <td>/</td>
-      <td>/</td>
-      <td>/</td>
-      <td>/</td>
+      <th></th>
+      <th *ngFor="let criteria of criteriaArray">{{ criteria.name }}</th>
     </tr>
-    <tr *ngFor="let criteriaArray of decisionArray.criteriaArray">
-      <td>{{ criteriaArray.id }}</td>
-      <td>{{ criteriaArray.name }}</td>
-      <td>{{ criteriaArray.rate }}</td>
-      <td>{{ criteriaArray.value }}</td>
-      <td>{{ criteriaArray.valueRate }}</td>
-      <td>{{ criteriaArray.criterionPriority }}</td>
-      <td>{{ criteriaArray.valuePriority }}</td>
-    </tr>
-  </table> 
+  </thead>
+  <tbody> 
+    <tr *ngFor="let alternative of decisionArray">
+      <td>{{ alternative.name }}</td>       
+      <td *ngFor="let criteria of alternative.criteriaArray">{{ criteria.valueRate}}</td> 
+    </tr> 
+  </tbody>   
+</table> 
 
 </div>

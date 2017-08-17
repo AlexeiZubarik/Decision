@@ -8,6 +8,8 @@ import { MdButtonModule } from '@angular/material';
 import { MdToolbarModule } from '@angular/material';
 import { MdGridListModule } from '@angular/material';
 import { MdTableModule } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk';
+import { MdSortModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -20,7 +22,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MdInputModule,
     MdGridListModule,
     MdTableModule,
-    BrowserAnimationsModule
+    CdkTableModule,
+    BrowserAnimationsModule,
+    MdSortModule
   ],
   exports: [
     MdMenuModule,
@@ -31,7 +35,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MdInputModule,
     MdGridListModule,
     MdTableModule,
-    BrowserAnimationsModule
+    CdkTableModule,
+    BrowserAnimationsModule,
+    MdSortModule
   ]
 })
 export class MyMaterialModule {}
