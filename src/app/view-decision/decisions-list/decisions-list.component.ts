@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSource } from '@angular/cdk';
 import { MdSort } from '@angular/material';
@@ -11,6 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
 
 @Component({
   selector: 'app-decisions-list',
@@ -24,6 +27,7 @@ export class DecisionsListComponent implements OnInit {
   dataSource: ExampleDataSource | null;
 
   @ViewChild(MdSort) sort: MdSort;
+  @ViewChild('filter') filter: ElementRef;
 
   constructor(
     private router: Router,
@@ -32,8 +36,15 @@ export class DecisionsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.decisionService.getDecisions().then(decisions => this.decisions = decisions);
+    // this.decisionService.getDecisions().then(decisions => this.decisions = decisions);
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
+    Observable.fromEvent(this.filter.nativeElement, 'keyup')
+      .debounceTime(150)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        if (!this.dataSource) { return; }
+        this.dataSource.filter = this.filter.nativeElement.value;
+      });
   }
 
   onSelect(decision: Decision) {
@@ -101,6 +112,10 @@ export class DecisionsListComponent implements OnInit {
 * should be rendered.
 */
   export class ExampleDataSource extends DataSource<any> {
+    _filterChange = new BehaviorSubject('');
+    get filter(): string { return this._filterChange.value; }
+    set filter(filter: string) { this._filterChange.next(filter); }
+
     constructor(private _exampleDatabase: ExampleDatabase, private _sort: MdSort) {
       super();
   }
@@ -110,10 +125,15 @@ export class DecisionsListComponent implements OnInit {
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
       this._sort.mdSortChange,
+      this._filterChange,
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      return this.getSortedData();
+      return  this._exampleDatabase.data.slice().filter((item: UserData) => {
+        const searchStr = (item.id + item.name + item.color).toLowerCase();
+        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+      });
+      // return this.getSortedData();
     });
   }
 
@@ -122,7 +142,7 @@ export class DecisionsListComponent implements OnInit {
   /** Returns a sorted copy of the database data. */
   getSortedData(): UserData[] {
     const data = this._exampleDatabase.data.slice();
-    if (!this._sort.active || this._sort.direction == '') { return data; }
+    if (!this._sort.active || this._sort.direction === '') { return data; }
 
     return data.sort((a, b) => {
       let propertyA: number|string = '';
@@ -135,10 +155,10 @@ export class DecisionsListComponent implements OnInit {
         case 'color': [propertyA, propertyB] = [a.color, b.color]; break;
       }
 
-      let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      let valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction == 'asc' ? 1 : -1);
+      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
     });
   }
 }

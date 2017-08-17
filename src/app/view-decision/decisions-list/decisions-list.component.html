@@ -10,6 +10,12 @@
 </md-nav-list> -->
 
 <div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <md-input-container floatPlaceholder="never">
+      <input mdInput #filter placeholder="Filter user">
+    </md-input-container>
+  </div>
+
   <md-table #table [dataSource]="dataSource" mdSort (mdSortChange)="sortData($event)">
 
     <!--- Note that these columns can be defined in any order.
