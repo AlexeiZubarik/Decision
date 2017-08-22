@@ -10,39 +10,37 @@
 </md-nav-list> -->
 
 <div class="example-container mat-elevation-z8">
-  <div class="example-header">
+  <!-- <div class="example-header">
     <md-input-container floatPlaceholder="never">
-      <input mdInput #filter placeholder="Filter user">
+      <input mdInput #filter placeholder="Filter decision">
     </md-input-container>
-  </div>
+  </div> -->
 
-  <md-table #table [dataSource]="dataSource" mdSort (mdSortChange)="sortData($event)">
+  <md-table #table [dataSource]="dataSource" mdSort>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- ID Column -->
-    <ng-container cdkColumnDef="userId">
+    <ng-container cdkColumnDef="decisionId">
       <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
       <md-cell *cdkCellDef="let row"> {{row.id}} </md-cell>
     </ng-container>
 
-    <!-- Progress Column -->
-    <ng-container cdkColumnDef="progress">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Progress </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.progress}}% </md-cell>
+    <ng-container cdkColumnDef="decisionName">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Decision Name </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.title}} </md-cell>
     </ng-container>
 
-    <!-- Name Column -->
-    <ng-container cdkColumnDef="userName">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
+    <ng-container cdkColumnDef="createData">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Create Data </md-header-cell>
+      <md-cell *cdkCellDef="let row">  </md-cell>
     </ng-container>
 
-    <!-- Color Column -->
-    <ng-container cdkColumnDef="color">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Color </md-header-cell>
-      <md-cell *cdkCellDef="let row" [style.color]="row.color"> {{row.color}} </md-cell>
+    <ng-container cdkColumnDef="alternatives">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Number of alternatives </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.decisionArray.length}} </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="criterion">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Number of Criteria </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.decisionArray}} </md-cell>
     </ng-container>
 
     <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>

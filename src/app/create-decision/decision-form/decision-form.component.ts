@@ -21,7 +21,7 @@ export class DecisionFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.decisionService.getDecisions().then(decisions => this.decisions = decisions);
+    this.decisionService.getDecisions().subscribe(decisions => this.decisions = decisions);
   }
 
   create() {

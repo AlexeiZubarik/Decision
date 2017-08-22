@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { Decision } from 'app/shared/decision';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -13,33 +18,27 @@ export class DecisionService {
 
   constructor(private http: Http) { }
 
-  getDecisions(): Promise<Decision[]> {
-    return this.http
-      .get(this.apiUrl)
-      .toPromise()
-      .then(response => response.json().data as Decision[])
-      .then(decisions => this.decisions = decisions)
-      .catch(this.handleError);
+  getDecisions(): Observable<Decision[]> {
+    return this.http.get(this.apiUrl)
+                    .map(response => response.json().data as Decision[])
+                    .catch(this.handleError);
   }
 
-  getDecision(id: number): Promise<Decision> {
+  getDecision(id: number): Observable<Decision> {
     const url = `${this.apiUrl}/${id}`;
 
-    return this.http
-      .get(url)
-      .toPromise()
-      .then(response => response.json().data as Decision)
-      .then(decisions => this.decisions.find(decision => decision.id === id))
-      .catch(this.handleError);
+    return this.http.get(url)
+                    .map(response => response.json().data as Decision)
+                    .map(decisions => this.decisions.find(decision => decision.id === id))
+                    .catch(this.handleError);
   }
 
-  update(decision: Decision): Promise<Decision> {
+  update(decision: Decision): Observable<Decision> {
     const url = `${this.apiUrl}/${decision.id}`;
 
     return this.http
       .put(url, JSON.stringify(decision), {headers: this.headers})
-      .toPromise()
-      .then(() => decision)
+      .map(() => decision)
       .catch(this.handleError);
   }
 
@@ -47,12 +46,9 @@ export class DecisionService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers });
 
-    this.http
-      .post(this.apiUrl, decision, options)
-      .toPromise()
-      .then(response => response.json().data as Decision)
-      .then(decision => this.decisions.push(decision))
-      .catch(this.handleError);
+    return this.http.post(this.apiUrl, decision, options)
+                    .map(response => response.json().data as Decision)
+                    .catch(this.handleError);
   }
 
   deleteDecision(decision: Decision) {
@@ -60,24 +56,15 @@ export class DecisionService {
     let options = new RequestOptions({ headers });
     let url = `${this.apiUrl}/${decision.id}`;
 
-    this.http
-      .delete(url, options)
-      .toPromise()
-      .then(response => {
-        let index = this.decisions.indexOf(decision);
-
-        if (index > -1) {
-          this.decisions.splice(index, 1);
-        }
-      })
-      .catch(this.handleError);
+    return this.http.delete(url, options)
+                    .catch(this.handleError);
   }
 
   editDecision() {}
 
   private handleError(error: any) {
     console.error('Произошла ошибка', error);
-    return Promise.reject(error.message || error);
+    return Observable.throw(error.message || error);
   }
 
 }
