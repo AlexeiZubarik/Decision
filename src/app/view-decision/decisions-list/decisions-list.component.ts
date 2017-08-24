@@ -35,8 +35,14 @@ export class DecisionsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.decisionService.getDecisions().subscribe(decisions => this.decisions = decisions);
-    this.dataSource = new DecisionDataSource(this.decisionService);
+    this.dataSource = new DecisionDataSource(new DecisionData(this.decisionService.getDecisions()));
+     Observable.fromEvent(this.filter.nativeElement, 'keyup')
+      .debounceTime(150)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        if (!this.dataSource) { return; }
+        this.dataSource.filter = this.filter.nativeElement.value;
+    });
   }
 
   onSelect(decision: Decision) {
@@ -50,19 +56,46 @@ export class DecisionsListComponent implements OnInit {
         if (index > -1) { this.decisions.splice(index, 1); }
        });
   }
-
-
 }
 
 export class DecisionDataSource extends DataSource<any> {
-  constructor(private decisionService: DecisionService) {
+  _filterChange = new BehaviorSubject('');
+  get filter(): string { return this._filterChange.value; }
+  set filter(filter: string) { this._filterChange.next(filter); }
+
+  constructor(private _decisionData: DecisionData) {
     super();
   }
 
   connect(): Observable<Decision[]> {
-    return this.decisionService.getDecisions();
+    const displayDataChanges = [
+      this._decisionData.dataChange,
+      this._filterChange,
+    ];
+
+    //return this._decisionData.dataChange;
+    return Observable.merge(...displayDataChanges).map(() => {
+      return this._decisionData.dataChange.value.slice().filter((item: Decision) => {
+        let searchStr = (item.title + item.id).toLowerCase();
+        return searchStr.indexOf(this.filter.toLowerCase()) != -1;
+      });
+    });
   }
 
   disconnect() {}
 }
 
+export class DecisionData {
+  dataChange: BehaviorSubject<Decision[]> = new BehaviorSubject<Decision[]>([]);
+  get data(): Decision[] { return this.dataChange.value; }
+
+  constructor(private _observe) {
+    _observe.subscribe(decisions => {
+      for (let decision of decisions) {
+        const copiedData = this.data.slice();
+        copiedData.push(decision);
+        this.dataChange.next(copiedData);
+      }
+    });
+  }
+}
