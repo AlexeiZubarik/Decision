@@ -1,7 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
 import { DataSource } from '@angular/cdk';
 import { MdSort } from '@angular/material';
+import { MdPaginator } from '@angular/material';
 
 import { Decision } from 'app/shared/decision';
 import { DecisionService } from 'app/services/decision.service';
@@ -23,10 +26,12 @@ import 'rxjs/add/observable/fromEvent';
 export class DecisionsListComponent implements OnInit {
   displayedColumns = ['decisionId', 'decisionName', 'createData', 'alternatives', 'criterion'];
   decisions: Decision[];
+  decisionData: DecisionData;
   dataSource: DecisionDataSource | null;
 
   @ViewChild(MdSort) sort: MdSort;
   @ViewChild('filter') filter: ElementRef;
+  @ViewChild(MdPaginator) paginator: MdPaginator;
 
   constructor(
     private router: Router,
@@ -35,7 +40,8 @@ export class DecisionsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource = new DecisionDataSource(new DecisionData(this.decisionService.getDecisions()), this.sort);
+    this.decisionData = new DecisionData(this.decisionService.getDecisions());
+    this.dataSource = new DecisionDataSource(this.decisionData, this.sort, this.paginator);
      Observable.fromEvent(this.filter.nativeElement, 'keyup')
       .debounceTime(150)
       .distinctUntilChanged()
@@ -78,7 +84,10 @@ export class DecisionDataSource extends DataSource<any> {
   get filter(): string { return this._filterChange.value; }
   set filter(filter: string) { this._filterChange.next(filter); }
 
-  constructor(private _decisionData: DecisionData, private _sort: MdSort) {
+  constructor(
+    private _decisionData: DecisionData,
+    private _sort: MdSort,
+    private _paginator: MdPaginator) {
     super();
   }
 
@@ -87,10 +96,13 @@ export class DecisionDataSource extends DataSource<any> {
       this._decisionData.dataChange,
       this._filterChange,
       this._sort.mdSortChange,
+      this._paginator.page
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      return this.getSortedData();
+      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+
+      return this.getSortedData().splice(startIndex, this._paginator.pageSize);
     });
   }
 

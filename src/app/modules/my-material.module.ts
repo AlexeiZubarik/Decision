@@ -10,6 +10,7 @@ import { MdGridListModule } from '@angular/material';
 import { MdTableModule } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk';
 import { MdSortModule } from '@angular/material';
+import { MdPaginatorModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MdTableModule,
     CdkTableModule,
     BrowserAnimationsModule,
-    MdSortModule
+    MdSortModule,
+    MdPaginatorModule
   ],
   exports: [
     MdMenuModule,
@@ -37,7 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MdTableModule,
     CdkTableModule,
     BrowserAnimationsModule,
-    MdSortModule
+    MdSortModule,
+    MdPaginatorModule
   ]
 })
 export class MyMaterialModule {}
