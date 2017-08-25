@@ -29,5 +29,4 @@ export class CreateDecisionComponent implements OnInit {
   goNext() {
     this.router.navigate(['createalternative']);
   }
-
 }

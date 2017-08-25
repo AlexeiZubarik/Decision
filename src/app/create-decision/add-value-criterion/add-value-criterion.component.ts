@@ -7,6 +7,8 @@ import { Decision, DecisionArray, CriteriaArray } from 'app/shared/decision';
 import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
 
+import { MdSnackBar } from '@angular/material';
+
 @Component({
   selector: 'app-add-value-criterion',
   templateUrl: './add-value-criterion.component.html',
@@ -22,7 +24,8 @@ export class AddValueCriterionComponent implements OnInit {
     private router: Router,
     private location: Location,
     private createDecisionService: CreateDecisionService,
-    private decisionService: DecisionService
+    private decisionService: DecisionService,
+    private snackBar: MdSnackBar
   ) { }
 
   ngOnInit() {
@@ -49,9 +52,15 @@ export class AddValueCriterionComponent implements OnInit {
 
   saveDecision() {
     if (this.createDecisionService.titleDecision) {
-      console.log(this.decision);
+      this.openSnackBar(this.decision.title, 'Save')
       this.decisionService.createDecision(this.decision);
         //.subscribe(decision => this.decisions.push(decision));
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
   }
 }
