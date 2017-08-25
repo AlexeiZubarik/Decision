@@ -20,17 +20,16 @@ export class DecisionService {
 
   getDecisions(): Observable<Decision[]> {
     return this.http.get(this.apiUrl)
-                    .map(response => response.json().data as Decision[])
-                    .catch(this.handleError);
+      .map(response => response.json().data as Decision[])
+      .catch(this.handleError);
   }
 
   getDecision(id: number): Observable<Decision> {
     const url = `${this.apiUrl}/${id}`;
 
     return this.http.get(url)
-                    .map(response => response.json().data as Decision)
-                    .map(decisions => this.decisions.find(decision => decision.id === id))
-                    .catch(this.handleError);
+      .map(response => response.json().data as Decision)
+      .catch(this.handleError);
   }
 
   update(decision: Decision): Observable<Decision> {
@@ -46,9 +45,12 @@ export class DecisionService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers });
 
-    return this.http.post(this.apiUrl, decision, options)
-                    .map(response => response.json().data as Decision)
-                    .catch(this.handleError);
+    return this.http
+      .post(this.apiUrl, decision, options)
+      .map(response => response.json().data as Decision)
+      .map(decision => this.decisions.push(decision))
+      .catch(this.handleError)
+      .subscribe();
   }
 
   deleteDecision(decision: Decision) {
@@ -56,8 +58,9 @@ export class DecisionService {
     let options = new RequestOptions({ headers });
     let url = `${this.apiUrl}/${decision.id}`;
 
-    return this.http.delete(url, options)
-                    .catch(this.handleError);
+    return this.http
+      .delete(url, options)
+      .catch(this.handleError);
   }
 
   editDecision() {}
@@ -66,5 +69,4 @@ export class DecisionService {
     console.error('Произошла ошибка', error);
     return Observable.throw(error.message || error);
   }
-
 }

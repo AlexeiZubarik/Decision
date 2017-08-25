@@ -25,10 +25,8 @@ export class DecisionDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap
-      .switchMap((params: ParamMap) =>
-        // tslint:disable-next-line:radix
-        this.decisionService.getDecision( +params.get('id')) )
-      .subscribe( decision => {
+      .switchMap((params: ParamMap) => this.decisionService.getDecision( +params.get('id') ))
+      .subscribe( (decision: Decision) => {
         this.decision = decision;
         this.decisionArray = this.decision.decisionArray;
         this.criteriaArray = this.decisionArray[0].criteriaArray;

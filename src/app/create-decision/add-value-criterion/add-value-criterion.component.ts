@@ -49,7 +49,9 @@ export class AddValueCriterionComponent implements OnInit {
 
   saveDecision() {
     if (this.createDecisionService.titleDecision) {
+      console.log(this.decision);
       this.decisionService.createDecision(this.decision);
+        //.subscribe(decision => this.decisions.push(decision));
     }
   }
 }

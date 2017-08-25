@@ -55,13 +55,13 @@ export class DecisionsListComponent implements OnInit {
     this.router.navigate(['/viewdecision/', decision.id]);
   }
 
-  delete(decision: Decision) {
-    this.decisionService.deleteDecision(decision)
-      .subscribe(response => {
-        const index = this.decisions.indexOf(decision);
-        if (index > -1) { this.decisions.splice(index, 1); }
-       });
-  }
+  // delete(decision: Decision) {
+  //   this.decisionService.deleteDecision(decision)
+  //     .subscribe(response => {
+  //       const index = this.decisions.indexOf(decision);
+  //       if (index > -1) { this.decisions.splice(index, 1); }
+  //      });
+  // }
 }
 
 export class DecisionData {
@@ -69,7 +69,7 @@ export class DecisionData {
   get data(): Decision[] { return this.dataChange.value; }
 
   constructor(private _observe: Observable<Decision[]>) {
-    _observe.subscribe(decisions => {
+    _observe.subscribe((decisions: Decision[]) => {
       for (const decision of decisions) {
         const copiedData = this.data.slice();
         copiedData.push(decision);
