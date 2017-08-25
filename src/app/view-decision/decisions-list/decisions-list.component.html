@@ -1,10 +1,66 @@
-<md-nav-list *ngIf="decisions.length">
+<!-- <md-nav-list *ngIf="decisions.length">
   <h3 md-subheader>Decisions List</h3>
   <md-list-item (click)="onSelect(decision)" *ngFor="let decision of decisions">
     <h4 md-line>{{decision.title}}</h4>
     <p md-line>id: {{decision.id}}</p>
-    <button md-icon-button><md-icon>edit</md-icon></button> 
-    <button md-icon-button (click)="delete(decision)"><md-icon calss="exampple-icon">delete_forever</md-icon></button>    
+    <button md-icon-button><md-icon>edit</md-icon></button>
+    <button md-icon-button (click)="delete(decision)"><md-icon calss="exampple-icon">delete_forever</md-icon></button>
   </md-list-item>
   <md-divider></md-divider>
-</md-nav-list>
+</md-nav-list> -->
+
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <md-input-container floatPlaceholder="never">
+      <input mdInput #filter placeholder="Filter decision">
+    </md-input-container>
+  </div>
+
+  <md-table #table [dataSource]="dataSource" mdSort>
+
+    <ng-container cdkColumnDef="decisionId">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.id}} </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="decisionName">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Decision Name </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.title}} </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="createData">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Create Data </md-header-cell>
+      <md-cell *cdkCellDef="let row">  </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="alternatives">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Number of alternatives </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.decisionArray.length}} </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="criterion">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Number of Criteria </md-header-cell>
+      <md-cell *cdkCellDef="let row">
+          <div *ngIf="row.decisionArray[0].criteriaArray !== undefined; else elseBlock"> {{row.decisionArray[0].criteriaArray.length}} </div>
+          <ng-template #elseBlock> 0 </ng-template>
+      </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="note">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Note </md-header-cell>
+      <md-cell *cdkCellDef="let row"> </md-cell>
+    </ng-container>
+
+    <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *cdkRowDef="let row; columns: displayedColumns;"
+            (click)="onSelect(row)">
+    </md-row>
+  </md-table>
+
+  <md-paginator #paginator
+                [length]="decisionData.data.length"
+                [pageIndex]="0"
+                [pageSize]="25"
+                [pageSizeOptions]="[5, 10, 25, 100]">
+  </md-paginator>
+</div>

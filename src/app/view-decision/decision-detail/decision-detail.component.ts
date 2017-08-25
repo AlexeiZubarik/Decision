@@ -14,6 +14,8 @@ import 'rxjs/add/operator/switchMap';
 })
 export class DecisionDetailComponent implements OnInit {
   @Input() decision: Decision;
+  decisionArray: DecisionArray[];
+  criteriaArray: CriteriaArray[];
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +28,10 @@ export class DecisionDetailComponent implements OnInit {
       .switchMap((params: ParamMap) =>
         // tslint:disable-next-line:radix
         this.decisionService.getDecision( +params.get('id')) )
-      .subscribe( decision => this.decision = decision );
+      .subscribe( decision => {
+        this.decision = decision;
+        this.decisionArray = this.decision.decisionArray;
+        this.criteriaArray = this.decisionArray[0].criteriaArray;
+      });
   }
 }
