@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./view-decision.component.css']
 })
 export class ViewDecisionComponent implements OnInit {
-  title = 'View Decision';
+  title = 'View Decisions';
 
   constructor(
     private router: Router,

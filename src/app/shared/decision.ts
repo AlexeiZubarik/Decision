@@ -10,7 +10,6 @@ export class Decision {
 }
 
 export class DecisionArray {
-
   constructor(
     public id: number,
     public name: string,
@@ -20,7 +19,6 @@ export class DecisionArray {
 }
 
 export class CriteriaArray {
-
   constructor(
     public id: number,
     public name: string = '',

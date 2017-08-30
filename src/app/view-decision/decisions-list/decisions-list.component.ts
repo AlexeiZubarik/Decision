@@ -54,14 +54,6 @@ export class DecisionsListComponent implements OnInit {
   onSelect(decision: Decision) {
     this.router.navigate(['/viewdecision/', decision.id]);
   }
-
-  // delete(decision: Decision) {
-  //   this.decisionService.deleteDecision(decision)
-  //     .subscribe(response => {
-  //       const index = this.decisions.indexOf(decision);
-  //       if (index > -1) { this.decisions.splice(index, 1); }
-  //      });
-  // }
 }
 
 export class DecisionData {
