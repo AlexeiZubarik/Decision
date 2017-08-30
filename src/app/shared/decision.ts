@@ -8,9 +8,9 @@ export class Decision {
 }
 
 export class DecisionArray {
-  id: number;
 
   constructor(
+    public id: number,
     public name: string,
     public finalRate: number = 1,
     public criteriaArray: CriteriaArray[] = []
@@ -18,9 +18,9 @@ export class DecisionArray {
 }
 
 export class CriteriaArray {
-  id: number;
 
   constructor(
+    public id: number,
     public name: string = '',
     public rate: number = 1,
     public value: string = '',

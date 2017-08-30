@@ -40,6 +40,7 @@ export class AddValueCriterionComponent implements OnInit {
 
   goNext() {
     this.router.navigate(['']);
+    this.createDecisionService.deleteData();
   }
 
   goCreateAlternative() {
@@ -52,9 +53,8 @@ export class AddValueCriterionComponent implements OnInit {
 
   saveDecision() {
     if (this.createDecisionService.titleDecision) {
-      this.openSnackBar(this.decision.title, 'Save')
       this.decisionService.createDecision(this.decision);
-        //.subscribe(decision => this.decisions.push(decision));
+      this.openSnackBar(this.decision.title, 'Save');
     }
   }
 
