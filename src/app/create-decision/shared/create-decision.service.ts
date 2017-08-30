@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { titleDecision, decisionArray, criteriaArray } from 'app/create-decision/shared/dataCreateDecision';
 import { Decision, DecisionArray, CriteriaArray } from 'app/shared/decision';
 
-import { DecisionService } from 'app/services/decision.service';
-
 @Injectable()
 export class CreateDecisionService {
   titleDecision: string;
@@ -12,9 +10,9 @@ export class CreateDecisionService {
   dateCreate: Date;
   note: string;
   decisionArray: DecisionArray[] = decisionArray;
-  citeriaArray: CriteriaArray[] = criteriaArray;
+  criteriaArray: CriteriaArray[] = criteriaArray;
 
-  constructor(private decisionService: DecisionService) { }
+  constructor() { }
 
   getDecision(): Decision {
     return this.decision;
@@ -25,7 +23,7 @@ export class CreateDecisionService {
   }
 
   getCriteriaArray(): CriteriaArray[] {
-    return this.citeriaArray;
+    return this.criteriaArray;
   }
 
   createTitleDecision(title: string) {
@@ -38,19 +36,20 @@ export class CreateDecisionService {
     }
 
     this.decision = new Decision(this.titleDecision, new Date(), 'test, testgdd dfg djfgert ', decisionArray);
-    //this.decisionService.createDecision(decision);
   }
 
   createAlternative(name: string) {
-    let alternative = new DecisionArray(name);
+    let alternative = new DecisionArray(this.decisionArray.length ?
+      this.decisionArray[this.decisionArray.length - 1].id + 1 : 1, name);
 
     this.decisionArray.push(alternative);
   }
 
   createCriteria(name: string) {
-    let criteria = new CriteriaArray(name);
+    let criteria = new CriteriaArray(this.criteriaArray.length ?
+      this.criteriaArray[this.criteriaArray.length - 1].id + 1 : 1, name);
 
-    this.citeriaArray.push(criteria);
+    this.criteriaArray.push(criteria);
   }
 
   deleteAlternative(alternative: DecisionArray) {
@@ -62,10 +61,15 @@ export class CreateDecisionService {
   }
 
   deleteCriteria(criteria: CriteriaArray) {
-    let index = this.citeriaArray.indexOf(criteria);
+    let index = this.criteriaArray.indexOf(criteria);
 
     if (index > -1) {
-      this.citeriaArray.splice(index, 1);
+      this.criteriaArray.splice(index, 1);
     }
+  }
+
+  deleteData() {
+    decisionArray.splice(0, decisionArray.length);
+    criteriaArray.splice(0, criteriaArray.length);
   }
 }
