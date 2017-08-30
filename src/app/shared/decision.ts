@@ -3,6 +3,8 @@ export class Decision {
 
   constructor(
     public title: string,
+    public dateCreate: Date,
+    public note: string,
     public decisionArray: DecisionArray[]
   ) {}
 }

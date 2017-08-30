@@ -28,9 +28,9 @@
       <md-cell *cdkCellDef="let row"> {{row.title}} </md-cell>
     </ng-container>
 
-    <ng-container cdkColumnDef="createData">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Create Data </md-header-cell>
-      <md-cell *cdkCellDef="let row">  </md-cell>
+    <ng-container cdkColumnDef="createDate">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Create Date </md-header-cell>
+      <md-cell *cdkCellDef="let row"> {{row.dateCreate | date: 'dd.MM.yyyy'}} </md-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="alternatives">
@@ -48,7 +48,7 @@
 
     <ng-container cdkColumnDef="note">
       <md-header-cell *cdkHeaderCellDef md-sort-header> Note </md-header-cell>
-      <md-cell *cdkCellDef="let row"> </md-cell>
+      <md-cell *cdkCellDef="let row"> {{row.note}} </md-cell>
     </ng-container>
 
     <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>

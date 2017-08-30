@@ -9,6 +9,8 @@ import { DecisionService } from 'app/services/decision.service';
 export class CreateDecisionService {
   titleDecision: string;
   decision: Decision;
+  dateCreate: Date;
+  note: string;
   decisionArray: DecisionArray[] = decisionArray;
   citeriaArray: CriteriaArray[] = criteriaArray;
 
@@ -35,7 +37,7 @@ export class CreateDecisionService {
       alternative.criteriaArray = criteriaArray;
     }
 
-    this.decision = new Decision(this.titleDecision, decisionArray);
+    this.decision = new Decision(this.titleDecision, new Date(), 'test, testgdd dfg djfgert ', decisionArray);
     //this.decisionService.createDecision(decision);
   }
 

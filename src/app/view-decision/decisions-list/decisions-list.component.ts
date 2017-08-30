@@ -24,7 +24,7 @@ import 'rxjs/add/observable/fromEvent';
   styleUrls: ['./decisions-list.component.css']
 })
 export class DecisionsListComponent implements OnInit {
-  displayedColumns = ['decisionId', 'decisionName', 'createData', 'alternatives', 'criterion', 'note'];
+  displayedColumns = ['decisionId', 'decisionName', 'createDate', 'alternatives', 'criterion', 'note'];
   decisions: Decision[];
   decisionData: DecisionData;
   dataSource: DecisionDataSource | null;
