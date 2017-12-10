@@ -2,12 +2,12 @@
     <table class="example-full-width" cellspacing=20>
       <tr>
         <td>
-          <md-input-container class="example-full-width">
-            <input mdInput name="title" [(ngModel)]="newDecisionTitle" placeholder="Name of decision" required>
-          </md-input-container>
+          <mat-input-container class="example-full-width">
+            <input matInput name="title" [(ngModel)]="newDecisionTitle" placeholder="Name of decision" required>
+          </mat-input-container>
         </td>
         <td>
-          <button md-button type="submit" [disabled]="decisionForm.form.invalid">Add</button>
+          <button mat-button type="submit" [disabled]="decisionForm.form.invalid">Add</button>
         </td>
       </tr>
     </table>

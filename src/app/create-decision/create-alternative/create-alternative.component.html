@@ -1,42 +1,42 @@
-<md-toolbar color="primary">
+<mat-toolbar color="primary">
   <header>
     <h1>{{ title }}</h1>
   </header>
-</md-toolbar>
+</mat-toolbar>
 
 <form class="example-form" (ngSubmit)="create(); alternativeForm.reset();" #alternativeForm="ngForm">
   <table class="example-full-width" cellspacing=20>
     <tr>
       <td>
-        <md-input-container class="example-full-width">
-          <input mdInput name="nameAlternative" [(ngModel)]="newAlternativeName" placeholder="Name of alternative" required>  
-        </md-input-container>
+        <mat-input-container class="example-full-width">
+          <input matInput name="nameAlternative" [(ngModel)]="newAlternativeName" placeholder="Name of alternative" required>  
+        </mat-input-container>
       </td>
       <td>
-        <button md-button type="submit" [disabled]="alternativeForm.form.invalid">Add</button>
+        <button mat-button type="submit" [disabled]="alternativeForm.form.invalid">Add</button>
       </td>
     </tr>    
   </table>    
 </form>
 
-<md-nav-list *ngIf="decisionArray.length">
-  <h3 md-subheader>Alternative Add</h3>
-  <md-list-item *ngFor="let alternative of decisionArray">
-    <h4 md-line>{{alternative.name}}</h4>
-    <p md-line>id: {{alternative.id}}</p>
-    <button md-icon-button><md-icon>edit</md-icon></button> 
-    <button md-icon-button (click)="delete(alternative)"><md-icon calss="exampple-icon">delete_forever</md-icon></button>    
-  </md-list-item>
-  <md-divider></md-divider>
-</md-nav-list>
+<mat-nav-list *ngIf="decisionArray.length">
+  <h3 mat-subheader>Alternative Add</h3>
+  <mat-list-item *ngFor="let alternative of decisionArray">
+    <h4 mat-line>{{alternative.name}}</h4>
+    <p mat-line>id: {{alternative.id}}</p>
+    <button mat-icon-button><mat-icon>edit</mat-icon></button> 
+    <button mat-icon-button (click)="delete(alternative)"><mat-icon calss="exampple-icon">delete_forever</mat-icon></button>    
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-nav-list>
 
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
-      <button md-raised-button (click)="goBack()">CANCEL</button>
+      <button mat-raised-button (click)="goBack()">CANCEL</button>
     </td>
     <td>
-      <button md-raised-button type="submit" (click)="goNext()">CONFIRM</button>
+      <button mat-raised-button type="submit" (click)="goNext()">CONFIRM</button>
     </td>
   </tr>
 </table>

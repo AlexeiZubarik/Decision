@@ -7,7 +7,7 @@ import { Decision, DecisionArray, CriteriaArray } from 'app/shared/decision';
 import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
 
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-add-value-criterion',
@@ -25,7 +25,7 @@ export class AddValueCriterionComponent implements OnInit {
     private location: Location,
     private createDecisionService: CreateDecisionService,
     private decisionService: DecisionService,
-    private snackBar: MdSnackBar
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
