@@ -1,18 +1,18 @@
-<md-toolbar color="primary">
+<mat-toolbar color="primary">
   <header>
     <h1>{{ title }}</h1>
   </header>
-</md-toolbar>
+</mat-toolbar>
 
 <router-outlet></router-outlet>
 
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
-      <button md-raised-button (click)="goBack()">CANCEL</button>
+      <button mat-raised-button (click)="goBack()">CANCEL</button>
     </td>
     <td>
-      <button md-raised-button type="submit" (click)="goNext()">CONFIRM</button>
+      <button mat-raised-button type="submit" (click)="goNext()">CONFIRM</button>
     </td>
   </tr>
 </table>

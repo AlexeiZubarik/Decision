@@ -1,55 +1,55 @@
 <div class="example-container mat-elevation-z8">
   <div class="example-header">
-    <md-input-container floatPlaceholder="never">
-      <input mdInput #filter placeholder="Filter decision">
-    </md-input-container>
+    <mat-input-container floatPlaceholder="never">
+      <input matInput #filter placeholder="Filter decision">
+    </mat-input-container>
   </div>
 
-  <md-table #table [dataSource]="dataSource" mdSort>
+  <mat-table #table [dataSource]="dataSource" matSort>
 
     <ng-container cdkColumnDef="decisionId">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.id}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.id}} </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="decisionName">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Decision Name </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.title}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef mat-sort-header> Decision Name </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.title}} </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="createDate">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Create Date </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.dateCreate | date: 'dd.MM.yyyy'}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef mat-sort-header> Create Date </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.dateCreate | date: 'dd.MM.yyyy'}} </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="alternatives">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Number of alternatives </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.decisionArray.length}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef mat-sort-header> Number of alternatives </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.decisionArray.length}} </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="criterion">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Number of Criteria </md-header-cell>
-      <md-cell *cdkCellDef="let row">
+      <mat-header-cell *cdkHeaderCellDef mat-sort-header> Number of Criteria </mat-header-cell>
+      <mat-cell *cdkCellDef="let row">
           <div *ngIf="row.decisionArray[0].criteriaArray !== undefined; else elseBlock"> {{row.decisionArray[0].criteriaArray.length}} </div>
           <ng-template #elseBlock> 0 </ng-template>
-      </md-cell>
+      </mat-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="note">
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Note </md-header-cell>
-      <md-cell *cdkCellDef="let row"> {{row.note}} </md-cell>
+      <mat-header-cell *cdkHeaderCellDef mat-sort-header> Note </mat-header-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.note}} </mat-cell>
     </ng-container>
 
-    <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *cdkRowDef="let row; columns: displayedColumns;"
+    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *cdkRowDef="let row; columns: displayedColumns;"
             (click)="onSelect(row)">
-    </md-row>
-  </md-table>
+    </mat-row>
+  </mat-table>
 
-  <md-paginator #paginator
+  <mat-paginator #paginator
                 [length]="decisionData.data.length"
                 [pageIndex]="0"
                 [pageSize]="25"
                 [pageSizeOptions]="[5, 10, 25, 100]">
-  </md-paginator>
+  </mat-paginator>
 </div>

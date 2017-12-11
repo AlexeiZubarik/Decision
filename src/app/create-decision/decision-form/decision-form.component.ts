@@ -5,7 +5,7 @@ import { Decision } from '../../shared/decision';
 import { DecisionService } from '../../services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
 
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-decision-form',
@@ -19,7 +19,7 @@ export class DecisionFormComponent implements OnInit {
   constructor(
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService,
-    public snackBar: MdSnackBar) {
+    public snackBar: MatSnackBar) {
     this.decisions = [];
   }
 

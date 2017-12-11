@@ -1,8 +1,8 @@
-<md-toolbar color="primary">
+<mat-toolbar color="primary">
   <header>
     <h1>{{ title }}</h1>
   </header>
-</md-toolbar>
+</mat-toolbar>
 
 <table *ngIf="decision">
   <thead>
@@ -22,13 +22,13 @@
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
-      <button md-raised-button (click)="goCreateCriterion()">ADD CRITERIA</button>
+      <button mat-raised-button (click)="goCreateCriterion()">ADD CRITERIA</button>
     </td>
     <td>
-      <button md-raised-button (click)="goCreateAlternative()">ADD ALTERNATIVE</button>
+      <button mat-raised-button (click)="goCreateAlternative()">ADD ALTERNATIVE</button>
     </td>
     <td>
-      <button md-raised-button (click)="saveDecision()">SAVE DECISION</button>
+      <button mat-raised-button (click)="saveDecision()">SAVE DECISION</button>
     </td>
   </tr>
 </table>
@@ -36,10 +36,10 @@
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
-      <button md-raised-button (click)="goBack()">CANCEL</button>
+      <button mat-raised-button (click)="goBack()">CANCEL</button>
     </td>
     <td>
-      <button md-raised-button (click)="goNext()">CONFIRM</button>
+      <button mat-raised-button (click)="goNext()">CONFIRM</button>
     </td>
   </tr>
 </table>
