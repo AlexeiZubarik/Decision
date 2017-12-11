@@ -30,7 +30,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 2',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 2,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -39,7 +39,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 3',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 3,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -48,7 +48,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 4',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 4,
                 criterionPriority: 1,
                 valuePriority: 1
               }
@@ -79,7 +79,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 2',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 2,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -88,7 +88,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 3',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 3,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -97,7 +97,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 4',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 4,
                 criterionPriority: 1,
                 valuePriority: 1
               }
@@ -122,7 +122,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 2',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 2,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -131,7 +131,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 3',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 3,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -140,7 +140,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 4',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 4,
                 criterionPriority: 1,
                 valuePriority: 1
               }
@@ -165,7 +165,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 2',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 2,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -174,7 +174,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 3',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 3,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -183,7 +183,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 4',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 4,
                 criterionPriority: 1,
                 valuePriority: 1
               }
@@ -208,7 +208,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 2',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 2,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -217,7 +217,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 3',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 3,
                 criterionPriority: 1,
                 valuePriority: 1
               },
@@ -226,7 +226,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 name: 'Criteria 4',
                 rate: 1,
                 value: '1',
-                valueRate: 1,
+                valueRate: 4,
                 criterionPriority: 1,
                 valuePriority: 1
               }

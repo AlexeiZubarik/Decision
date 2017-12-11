@@ -8,15 +8,15 @@
   <thead>
     <tr>
       <th></th>
-      <th *ngFor="let criteria of criteriaArray">{{ criteria.name }}</th>
+      <th *ngFor="let alternative of decisionArray">{{ alternative.name }}</th>
     </tr>
   </thead>
-  <tbody> 
-    <tr *ngFor="let alternative of decisionArray">
-      <td>{{ alternative.name }}</td>       
-      <td *ngFor="let criteria of alternative.criteriaArray">{{ criteria.valueRate}}</td> 
-    </tr> 
-  </tbody>   
+  <tbody>
+    <tr *ngFor="let criteria of decisionArray[0].criteriaArray">
+      <td>{{ criteria.name }}</td>
+      <td *ngFor="let alternative of decisionArray">{{ alternative.criteriaArray[criteria.id - 1]['valueRate'] }}</td>
+    </tr>
+  </tbody>
 </table>
 
 <table class="example-full-width" cellspacing=20>

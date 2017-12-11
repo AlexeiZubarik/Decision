@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -34,13 +34,17 @@ export class AddValueCriterionComponent implements OnInit {
     this.criteriaArray = this.decisionArray[0].criteriaArray;
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnDestroy() {
+    this.createDecisionService.deleteData();
+  }
+
   goBack(): void {
     this.location.back();
   }
 
   goNext() {
     this.router.navigate(['']);
-    this.createDecisionService.deleteData();
   }
 
   goCreateAlternative() {
