@@ -234,11 +234,11 @@ export class InMemoryDataService implements InMemoryDbService {
           }
         ]
       },
-      {
+      /*{
         id: 3,
         title: 'Decision 3',
         decisionArray: [{}]
-      },
+      },*/
     ];
 
     return { decisions };
