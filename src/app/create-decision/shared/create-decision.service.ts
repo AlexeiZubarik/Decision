@@ -31,11 +31,26 @@ export class CreateDecisionService {
   }
 
   createDecision() {
+    var number  = 1;
+    let compareCriteria : number [][] = null;
     for (let alternative of decisionArray) {
-      alternative.criteriaArray = criteriaArray;
+      alternative.criteriaArray = [];
+         this.setCriteriaArray(alternative.criteriaArray,number);
+         number = number + alternative.criteriaArray.length;
     }
+    this.decision = new Decision(this.titleDecision, new Date(), 'test, testgdd dfg djfgert ', decisionArray,compareCriteria);
+  }
 
-    this.decision = new Decision(this.titleDecision, new Date(), 'test, testgdd dfg djfgert ', decisionArray);
+  setCriteriaArray(criteriaArrays:any[], id: number)
+  {
+    for(let criteria of criteriaArray)
+    {
+      let criterias = new CriteriaArray(id, criteria.name,criteria.rate,criteria.value,
+      criteria.valueRate,criteria.criterionPriority,criteria.criterionPriority);
+      criteriaArrays.push(criterias);
+      id++; 
+    }
+    
   }
 
   createAlternative(name: string) {

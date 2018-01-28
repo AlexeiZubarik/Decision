@@ -5,7 +5,8 @@ export class Decision {
     public title: string,
     public dateCreate: Date,
     public note: string,
-    public decisionArray: DecisionArray[]
+    public decisionArray: DecisionArray[],
+    public compareCriteria: any []
   ) {}
 }
 
@@ -22,10 +23,10 @@ export class CriteriaArray {
   constructor(
     public id: number,
     public name: string = '',
-    public rate: number = 1,
-    public value: string = '',
-    public valueRate: number = 1,
-    public criterionPriority: number = 1,
-    public valuePriority: number = 1
+    public rate: number [] = null,
+    public value: string = null,
+    public valueRate: number = null,
+    public criterionPriority: number = null,
+    public valuePriority: number = null
   ) {}
 }

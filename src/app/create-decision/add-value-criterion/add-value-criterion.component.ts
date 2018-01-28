@@ -8,6 +8,7 @@ import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
 
 import { MatSnackBar } from '@angular/material';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-value-criterion',
@@ -16,6 +17,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class AddValueCriterionComponent implements OnInit {
   title = 'Add Value Criterion';
+  panelOpenState: boolean = false;
   decision: Decision;
   decisionArray: DecisionArray[];
   criteriaArray: CriteriaArray[];
@@ -31,12 +33,6 @@ export class AddValueCriterionComponent implements OnInit {
   ngOnInit() {
     this.decision = this.createDecisionService.getDecision();
     this.decisionArray = this.decision.decisionArray;
-    this.criteriaArray = this.decisionArray[0].criteriaArray;
-  }
-
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngOnDestroy() {
-    this.createDecisionService.deleteData();
   }
 
   goBack(): void {
@@ -44,7 +40,7 @@ export class AddValueCriterionComponent implements OnInit {
   }
 
   goNext() {
-    this.router.navigate(['']);
+    this.router.navigate(['pairedComparisomComponent']);
   }
 
   goCreateAlternative() {

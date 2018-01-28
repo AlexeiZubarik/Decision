@@ -25,19 +25,19 @@ export const decisionArray = [
     {
       id: 1,
       name: 'Criteria 1',
-      rate: 1,
-      value: '',
-      valueRate: 1,
-      criterionPriority: 1,
-      valuePriority: 1
+      rate: null,
+      value: null,
+      valueRate:null,
+      criterionPriority: null,
+      valuePriority: null,
     },
     {
       id: 2,
       name: 'Criteria 2',
-      rate: 1,
-      value: '',
-      valueRate: 2,
-      criterionPriority: 1,
-      valuePriority: 1
+      rate: null,
+      value: null,
+      valueRate: null,
+      criterionPriority: null,
+      valuePriority: null
     },
   ];

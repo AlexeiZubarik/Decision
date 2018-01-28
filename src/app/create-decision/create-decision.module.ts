@@ -13,6 +13,8 @@ import { CreateDecisionRoutingModule } from './create-decision-routing/create-de
 
 import { DecisionService } from '../services/decision.service';
 import { CreateDecisionService } from './shared/create-decision.service';
+import { InstructionComparisonValueComponent } from './instruction-comparison-value/instruction-comparison-value.component';
+import { PairedComparisomComponent } from './paired-comparisom/paired-comparisom.component';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import { CreateDecisionService } from './shared/create-decision.service';
     CreateCriterionComponent,
     CreateAlternativeComponent,
     AddValueCriterionComponent,
-    DecisionFormComponent
+    DecisionFormComponent,
+    InstructionComparisonValueComponent,
+    PairedComparisomComponent
   ],
   providers: [
     DecisionService,
