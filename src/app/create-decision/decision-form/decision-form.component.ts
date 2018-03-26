@@ -26,13 +26,17 @@ export class DecisionFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.decisionService.getDecisions().subscribe(decisions => this.decisions = decisions);
   }
 
   goNext() {
-    this.openSnackBar(this.newDecisionTitle, 'Create');
-    this.createDecisionService.createTitleNoteDecision(this.newDecisionTitle,this.note);
-    this.router.navigate(['createalternative']);
+    this.decisionService.saveDecision(this.newDecisionTitle,this.note).subscribe( data => 
+      {
+        localStorage.setItem('idDecision', JSON.stringify(data));
+        this.openSnackBar(this.newDecisionTitle, 'Create');
+        this.createDecisionService.createTitleNoteDecision(this.newDecisionTitle,this.note);
+        this.router.navigate(['createalternative']);
+      });
+    
   }
 
   openSnackBar(message: string, action: string) {

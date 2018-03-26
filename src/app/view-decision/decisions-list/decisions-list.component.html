@@ -14,10 +14,10 @@
 
     <ng-container cdkColumnDef="decisionName">
       <mat-header-cell *cdkHeaderCellDef mat-sort-header> Decision Name </mat-header-cell>
-      <mat-cell *cdkCellDef="let row"> {{row.title}} </mat-cell>
+      <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
     </ng-container>
 
-    <ng-container cdkColumnDef="createDate">
+    <!--<ng-container cdkColumnDef="createDate">
       <mat-header-cell *cdkHeaderCellDef mat-sort-header> Create Date </mat-header-cell>
       <mat-cell *cdkCellDef="let row"> {{row.dateCreate | date: 'dd.MM.yyyy'}} </mat-cell>
     </ng-container>
@@ -33,7 +33,7 @@
           <div *ngIf="row.decisionArray[0].criteriaArray !== undefined; else elseBlock"> {{row.decisionArray[0].criteriaArray.length}} </div>
           <ng-template #elseBlock> 0 </ng-template>
       </mat-cell>
-    </ng-container>
+    </ng-container>-->
 
     <ng-container cdkColumnDef="note">
       <mat-header-cell *cdkHeaderCellDef mat-sort-header> Note </mat-header-cell>

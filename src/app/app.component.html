@@ -1,24 +1,3 @@
-<mat-toolbar color="primary">  
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu" color="primary">
-    <button mat-menu-item (click)="goHome()">
-      <mat-icon>home</mat-icon>
-      <span>Home</span>
-    </button>
-    <button mat-menu-item (click)="goCreateDecision()">
-      <mat-icon>add_box</mat-icon>
-      <span>Create decision</span>
-    </button>
-    <button mat-menu-item (click)="goViewDecision()">
-      <mat-icon>visibility</mat-icon>
-      <span>View decisions</span>
-    </button>
-  </mat-menu>
 
-  <h1 class="mat-title">{{ title }}</h1>
-
- </mat-toolbar>
-
+<app-header></app-header>
 <router-outlet></router-outlet>

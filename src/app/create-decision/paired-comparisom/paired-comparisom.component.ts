@@ -22,7 +22,7 @@ export class PairedComparisomComponent implements OnInit {
   line:number = 1;
   column:number = 0;
   choose:boolean = true;
-  compareCriteria : any[];
+  compareCriteria : number[][];
   timeArray : any[] = new Array();
   compareArray : number = 0;
   flag: boolean = true;
@@ -44,13 +44,15 @@ export class PairedComparisomComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.decision = this.createDecisionService.getDecision();
-    this.decisionArray = this.decision.decisionArray;
-    this.criteriaArray = this.decisionArray[0].criteriaArray;
-    this.counter = this.doFact(this.criteriaArray.length-1)-1;
-    this.compareCriteria = new Array(this.criteriaArray.length);
-    this.firstCriteria = this.criteriaArray[0].name;
-    this.secondCriteria = this.criteriaArray[1].name;
+    this.decisionService.getDecision().subscribe(data=>{
+      this.decision = data;
+      this.decisionArray = this.decision.decisionArray;
+      this.criteriaArray = this.decisionArray[0].criteriaArray;
+      this.counter = this.doFact(this.criteriaArray.length-1)-1;
+      this.compareCriteria = new Array(this.criteriaArray.length);
+      this.firstCriteria = this.criteriaArray[0].name;
+      this.secondCriteria = this.criteriaArray[1].name;
+    });
     
   }
 
@@ -105,46 +107,16 @@ export class PairedComparisomComponent implements OnInit {
       }
     }
     else{
-      this.createCriteriaRate();
-      this.snackBar.open("Все критерии были попарно сравнены", "action", {
-        duration: 2000
+      this.decisionService.sendPairedCompareCriteria(this.compareCriteria).subscribe(data=>{
+        this.snackBar.open("Все критерии были попарно сравнены", "action", {
+          duration: 2000
+        });
+        this.router.navigate(['endTree']);
       });
-      console.log(this.decisionService.update(this.decision));
-      console.log(this.decision);
       }
     }     
   }
 
-  createCriteriaRate()
-  {
-    var multiplyArray : number[]  = [this.compareCriteria.length];
-    var index = 0;
-    var allMultiply = 0;
-    for( let criteriaRate of this.compareCriteria)
-    {
-      var timeVariable = 1;
-      for(let j in criteriaRate)
-      {
-        timeVariable= timeVariable*criteriaRate[j];
-      }
-      multiplyArray[index]=Math.pow(timeVariable,1/4);
-      index++;
-      allMultiply += Math.pow(timeVariable,1/4);
-    }
-    for(let j in multiplyArray)
-    {
-      multiplyArray[j] = multiplyArray[j]/allMultiply;
-    }
-    for(let alternative of this.decision.decisionArray)
-    {
-      var index = 0;
-      for(let criteria of alternative.criteriaArray)
-      {
-          criteria.rate = multiplyArray[index];
-          index++;
-      }
-    }
-  }
   saveCompare()
   {
     if(this.choose==true)

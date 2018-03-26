@@ -8,6 +8,10 @@ import { CreateAlternativeComponent } from '../create-alternative/create-alterna
 import { AddValueCriterionComponent } from '../add-value-criterion/add-value-criterion.component';
 import { InstructionComparisonValueComponent } from '../instruction-comparison-value/instruction-comparison-value.component'
 import { PairedComparisomComponent } from 'app/create-decision/paired-comparisom/paired-comparisom.component';
+import { EndTreeComponent } from 'app/create-decision/end-tree/end-tree.component';
+import { PairedComparisonComponentComponent } from 'app/create-decision/paired-comparison-component/paired-comparison-component.component';
+import { EditAlternativComponent } from 'app/create-decision/create-alternative/edit-alternativ/edit-alternativ.component';
+import { EditCriteriaComponent } from 'app/create-decision/create-criterion/edit-criteria/edit-criteria.component';
 
 const createDecisionRoutes: Routes = [
   { path: 'createdecision',
@@ -23,7 +27,9 @@ const createDecisionRoutes: Routes = [
   { path: 'createcriterion', component: CreateCriterionComponent },
   { path: 'addvaluecriterion', component: AddValueCriterionComponent },
   { path: 'instructionComparisonValueComponent', component: InstructionComparisonValueComponent },
-  { path: 'pairedComparisomComponent', component: PairedComparisomComponent }
+  { path: 'pairedComparisomComponent', component: PairedComparisomComponent },
+  { path: 'endTree', component: EndTreeComponent},
+  { path: 'pairedComparisonCriteriaComponent', component: PairedComparisonComponentComponent}
 ];
 
 @NgModule({
@@ -32,6 +38,7 @@ const createDecisionRoutes: Routes = [
   ],
   exports: [
     RouterModule
-  ]
+  ],
+  entryComponents: [CreateAlternativeComponent, EditAlternativComponent,CreateCriterionComponent,EditCriteriaComponent],
 })
 export class CreateDecisionRoutingModule { }

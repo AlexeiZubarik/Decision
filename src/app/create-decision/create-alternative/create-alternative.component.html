@@ -24,7 +24,7 @@
   <mat-list-item *ngFor="let alternative of decisionArray">
     <h4 mat-line>{{alternative.name}}</h4>
     <p mat-line>id: {{alternative.id}}</p>
-    <button mat-icon-button><mat-icon>edit</mat-icon></button> 
+    <button mat-icon-button (click)="editAlternative(alternative)"><mat-icon>edit</mat-icon></button> 
     <button mat-icon-button (click)="delete(alternative)"><mat-icon calss="exampple-icon">delete_forever</mat-icon></button>    
   </mat-list-item>
   <mat-divider></mat-divider>
