@@ -33,11 +33,14 @@ export class DecisionService {
   }
 
   update(decision: Decision): Observable<Decision> {
-    const url = `${this.apiUrl}/${decision.id}`;
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers });
+    const url = `http://localhost:51825/api/Decision`;
 
     return this.http
-      .put(url, JSON.stringify(decision), {headers: this.headers})
-      .map(() => decision)
+      .put(url, JSON.stringify(decision), options)
+      .map(response => response.json().data as Decision)
+      .map(decision => this.decisions.push(decision))
       .catch(this.handleError);
   }
 

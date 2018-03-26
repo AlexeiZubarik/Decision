@@ -63,7 +63,7 @@ export class PairedComparisomComponent implements OnInit {
       for(var criteria = 0 ; criteria < this.criteriaArray.length; criteria++)
       {
         this.compareCriteria[criteria] = new Array(this.criteriaArray.length);
-        this.compareCriteria[criteria][criteria] = 0;
+        this.compareCriteria[criteria][criteria] = 1;
       }
       this.saveCompare();
       this.changeCounter();
@@ -105,14 +105,46 @@ export class PairedComparisomComponent implements OnInit {
       }
     }
     else{
+      this.createCriteriaRate();
       this.snackBar.open("Все критерии были попарно сравнены", "action", {
         duration: 2000
       });
-    }
-    }
-    console.log(this.compareCriteria);      
+      console.log(this.decisionService.update(this.decision));
+      console.log(this.decision);
+      }
+    }     
   }
 
+  createCriteriaRate()
+  {
+    var multiplyArray : number[]  = [this.compareCriteria.length];
+    var index = 0;
+    var allMultiply = 0;
+    for( let criteriaRate of this.compareCriteria)
+    {
+      var timeVariable = 1;
+      for(let j in criteriaRate)
+      {
+        timeVariable= timeVariable*criteriaRate[j];
+      }
+      multiplyArray[index]=Math.pow(timeVariable,1/4);
+      index++;
+      allMultiply += Math.pow(timeVariable,1/4);
+    }
+    for(let j in multiplyArray)
+    {
+      multiplyArray[j] = multiplyArray[j]/allMultiply;
+    }
+    for(let alternative of this.decision.decisionArray)
+    {
+      var index = 0;
+      for(let criteria of alternative.criteriaArray)
+      {
+          criteria.rate = multiplyArray[index];
+          index++;
+      }
+    }
+  }
   saveCompare()
   {
     if(this.choose==true)

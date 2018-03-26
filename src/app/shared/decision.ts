@@ -23,7 +23,7 @@ export class CriteriaArray {
   constructor(
     public id: number,
     public name: string = '',
-    public rate: number [] = null,
+    public rate: number = null,
     public value: string = null,
     public valueRate: number = null,
     public criterionPriority: number = null,

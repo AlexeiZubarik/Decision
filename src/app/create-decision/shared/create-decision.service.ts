@@ -26,8 +26,9 @@ export class CreateDecisionService {
     return this.criteriaArray;
   }
 
-  createTitleDecision(title: string) {
+  createTitleNoteDecision(title: string, note: string) {
     this.titleDecision = title;
+    this.note = note;
   }
 
   createDecision() {
@@ -38,7 +39,7 @@ export class CreateDecisionService {
          this.setCriteriaArray(alternative.criteriaArray,number);
          number = number + alternative.criteriaArray.length;
     }
-    this.decision = new Decision(this.titleDecision, new Date(), 'test, testgdd dfg djfgert ', decisionArray,compareCriteria);
+    this.decision = new Decision(this.titleDecision, new Date(), this.note, decisionArray,compareCriteria);
   }
 
   setCriteriaArray(criteriaArrays:any[], id: number)

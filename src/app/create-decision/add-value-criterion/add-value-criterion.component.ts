@@ -21,6 +21,7 @@ export class AddValueCriterionComponent implements OnInit {
   decision: Decision;
   decisionArray: DecisionArray[];
   criteriaArray: CriteriaArray[];
+  minRate: boolean[] = [];
 
   constructor(
     private router: Router,
@@ -33,6 +34,10 @@ export class AddValueCriterionComponent implements OnInit {
   ngOnInit() {
     this.decision = this.createDecisionService.getDecision();
     this.decisionArray = this.decision.decisionArray;
+    for( let i in this.decision.decisionArray[0].criteriaArray )
+    {
+        this.minRate[i] = false;
+    }
   }
 
   goBack(): void {
@@ -52,7 +57,24 @@ export class AddValueCriterionComponent implements OnInit {
   }
 
   saveDecision() {
-    if (this.createDecisionService.titleDecision) {
+    for(let i of this.decision.decisionArray)
+    {
+      for(let j of i.criteriaArray)
+      {
+        j.valueRate = parseInt(j.value);
+      }
+    }
+    for( let i in this.minRate )
+    {
+        if(this.minRate[i] == true)
+        {
+          for(let alternative of this.decision.decisionArray)
+          {
+            alternative.criteriaArray[i].valueRate = 1/alternative.criteriaArray[i].valueRate;
+          }
+        }
+    }
+     if (this.createDecisionService.titleDecision) {
       this.decisionService.createDecision(this.decision);
       this.openSnackBar(this.decision.title, 'Save');
     }

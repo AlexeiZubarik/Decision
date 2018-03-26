@@ -12,7 +12,7 @@
     <tbody>
       <tr *ngFor="let criteria of decisionArray[0].criteriaArray">
         <td>{{ criteria.name }}</td>
-        <td *ngFor="let alternative of decisionArray">{{ alternative.criteriaArray[criteria.id - 1]['valueRate'] }}</td>
+        <td *ngFor="let alternative of decisionArray">{{ alternative.criteriaArray[criteria.id - 1]['valuePriority'] }}</td>
       </tr>
     </tbody>
   </table>

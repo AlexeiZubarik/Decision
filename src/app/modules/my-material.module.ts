@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-
-import { MatMenuModule } from '@angular/material';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatMenuModule, MatFormField } from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material';
 import { MatIconModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
@@ -31,7 +32,9 @@ import {MatSelectModule} from '@angular/material/select';
     MatPaginatorModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule,
+    MatFormFieldModule
   ],
   exports: [
     MatMenuModule,
@@ -48,7 +51,9 @@ import {MatSelectModule} from '@angular/material/select';
     MatPaginatorModule,
     BrowserAnimationsModule,
     MatExpansionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule,
+    MatFormFieldModule
   ]
 })
 export class MyMaterialModule {}

@@ -37,16 +37,18 @@
 <table *ngIf="decision">
   <thead>
     <tr>
+      <th>Важно <br> минимальное<br>значение</th>
       <th></th>
       <th *ngFor="let alternative of decisionArray">{{ alternative.name }}</th>
     </tr>
   </thead>
   <tbody>
       <tr *ngFor="let number of decisionArray[0].criteriaArray">
+        <th><mat-checkbox  [(ngModel)]="minRate[number.id-1]" id = {{number.id-1}}></mat-checkbox></th>
         <th> {{number.name}}</th>
         <th *ngFor="let alternative of decisionArray">
           <mat-input-container class="example-full-width" style="margin-left:20px;margin-right:20px;width:100px;">
-            <input  matInput [(ngModel)]="alternative.criteriaArray[number.id-1].valueRate" id = {{alternative.criteriaArray[number.id-1].id}} required >  
+            <input  matInput [(ngModel)]="alternative.criteriaArray[number.id-1].value" id = {{alternative.criteriaArray[number.id-1].id}} required >  
           </mat-input-container>
         </th>
       </tr>
