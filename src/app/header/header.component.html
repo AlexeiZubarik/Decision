@@ -1,0 +1,38 @@
+<!--<mat-toolbar color="primary">  
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" color="primary">
+    <button mat-menu-item (click)="goHome()">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
+    <button mat-menu-item (click)="goCreateDecision()">
+      <mat-icon>add_box</mat-icon>
+      <span>Create decision</span>
+    </button>
+    <button mat-menu-item (click)="goViewDecision()">
+      <mat-icon>visibility</mat-icon>
+      <span>View decisions</span>
+    </button>
+    <button mat-menu-item (click)="goRegistration()">
+      <mat-icon>visibility</mat-icon>
+      <span>Registration</span>
+    </button>
+  </mat-menu>
+
+  <h1 class="mat-title">{{ title }}</h1>
+
+ </mat-toolbar>-->
+
+<nav id="navbar-header" class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <button  class="login btn-primary btn" id="login-button-header" data-toggle="modal"
+            data-target="#openModal" > <span class="glyphicon glyphicon-log-in"></span> Войти</button>
+  </div>
+</nav>
+<div id="openModal" class="modal fade" aria-labelledby="openModal" tabindex="-1" aria-hidden="true" role="dialog"  >
+ <app-user-component></app-user-component>
+</div>
+
+

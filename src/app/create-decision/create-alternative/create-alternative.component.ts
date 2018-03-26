@@ -6,6 +6,9 @@ import { Decision, DecisionArray } from 'app/shared/decision';
 
 import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
+import { EditAlternativComponent } from 'app/create-decision/create-alternative/edit-alternativ/edit-alternativ.component';
+import { MatDialog } from '@angular/material';
+
 
 @Component({
   selector: 'app-create-alternative',
@@ -20,20 +23,39 @@ export class CreateAlternativeComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    private createDecisionService: CreateDecisionService) {
+    private decisionService: DecisionService,
+    private createDecisionService: CreateDecisionService,
+    private dialog: MatDialog) {
     this.decisionArray = [];
   }
 
   ngOnInit() {
-    this.decisionArray = this.createDecisionService.getDecisionArray();
+    this.decisionService.getDecision().subscribe(data=>{
+      this.decisionArray = data.decisionArray;
+    });
   }
 
   delete(alternative: DecisionArray) {
-    this.createDecisionService.deleteAlternative(alternative);
+    this.decisionService.deleteAlternative( alternative.id).subscribe(data=>
+      {
+        if(data==1)
+        {
+          this.decisionService.getDecision().subscribe(data=>{
+            this.decisionArray = data.decisionArray;
+          });
+        }
+      });
   }
 
   create() {
-    this.createDecisionService.createAlternative(this.newAlternativeName);
+    let name = this.newAlternativeName;
+    this.decisionService.createAlternative(name).subscribe( data => 
+      {
+        let number: number;
+        number = data;
+        let alternative = new DecisionArray( number , name);
+        this.decisionArray.push(alternative);
+      });
   }
 
   goBack(): void {
@@ -43,4 +65,23 @@ export class CreateAlternativeComponent implements OnInit {
   goNext() {
     this.router.navigate(['createcriterion']);
   }
+
+  editAlternative(alternative: DecisionArray): void {
+    let dialogRef = this.dialog.open(EditAlternativComponent, {
+      width: '250px',
+      data: { name: alternative.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined)
+      {
+        alternative.name = result;
+        
+        this.decisionService.editAlternative(alternative).subscribe( data => 
+        {
+        });
+      }
+    });
+  }
+
 }

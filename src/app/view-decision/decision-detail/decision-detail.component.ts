@@ -13,10 +13,8 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./decision-detail.component.css']
 })
 export class DecisionDetailComponent implements OnInit {
-  @Input() decision: Decision;
-  decisionArray: DecisionArray[];
-  criteriaArray: CriteriaArray[];
-
+  decision : Decision;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -24,12 +22,11 @@ export class DecisionDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap
-      .switchMap((params: ParamMap) => this.decisionService.getDecision( +params.get('id') ))
+     this.route.paramMap
+      .switchMap((params: ParamMap) => this.decisionService.getDecisionById( +params.get('id') ))
       .subscribe( (decision: Decision) => {
-        this.decision = decision;
-        this.decisionArray = this.decision.decisionArray;
-        this.criteriaArray = this.decisionArray[0].criteriaArray;
-      });
+      this.decision = decision;
+    });
+    
   }
 }

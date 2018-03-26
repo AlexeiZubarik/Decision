@@ -22,7 +22,7 @@ export class PairedComparisomComponent implements OnInit {
   line:number = 1;
   column:number = 0;
   choose:boolean = true;
-  compareCriteria : any[];
+  compareCriteria : number[][];
   timeArray : any[] = new Array();
   compareArray : number = 0;
   flag: boolean = true;
@@ -44,13 +44,15 @@ export class PairedComparisomComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.decision = this.createDecisionService.getDecision();
-    this.decisionArray = this.decision.decisionArray;
-    this.criteriaArray = this.decisionArray[0].criteriaArray;
-    this.counter = this.doFact(this.criteriaArray.length-1)-1;
-    this.compareCriteria = new Array(this.criteriaArray.length);
-    this.firstCriteria = this.criteriaArray[0].name;
-    this.secondCriteria = this.criteriaArray[1].name;
+    this.decisionService.getDecision().subscribe(data=>{
+      this.decision = data;
+      this.decisionArray = this.decision.decisionArray;
+      this.criteriaArray = this.decisionArray[0].criteriaArray;
+      this.counter = this.doFact(this.criteriaArray.length-1)-1;
+      this.compareCriteria = new Array(this.criteriaArray.length);
+      this.firstCriteria = this.criteriaArray[0].name;
+      this.secondCriteria = this.criteriaArray[1].name;
+    });
     
   }
 
@@ -63,7 +65,7 @@ export class PairedComparisomComponent implements OnInit {
       for(var criteria = 0 ; criteria < this.criteriaArray.length; criteria++)
       {
         this.compareCriteria[criteria] = new Array(this.criteriaArray.length);
-        this.compareCriteria[criteria][criteria] = 0;
+        this.compareCriteria[criteria][criteria] = 1;
       }
       this.saveCompare();
       this.changeCounter();
@@ -105,12 +107,14 @@ export class PairedComparisomComponent implements OnInit {
       }
     }
     else{
-      this.snackBar.open("Все критерии были попарно сравнены", "action", {
-        duration: 2000
+      this.decisionService.sendPairedCompareCriteria(this.compareCriteria).subscribe(data=>{
+        this.snackBar.open("Все критерии были попарно сравнены", "action", {
+          duration: 2000
+        });
+        this.router.navigate(['endTree']);
       });
-    }
-    }
-    console.log(this.compareCriteria);      
+      }
+    }     
   }
 
   saveCompare()

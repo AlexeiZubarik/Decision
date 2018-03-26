@@ -28,6 +28,7 @@ export const decisionArray = [
       rate: null,
       value: null,
       valueRate:null,
+      minRate:false,
       criterionPriority: null,
       valuePriority: null,
     },
@@ -37,6 +38,7 @@ export const decisionArray = [
       rate: null,
       value: null,
       valueRate: null,
+      minRate:false,
       criterionPriority: null,
       valuePriority: null
     },

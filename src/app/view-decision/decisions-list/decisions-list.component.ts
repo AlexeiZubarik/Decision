@@ -24,7 +24,7 @@ import 'rxjs/add/observable/fromEvent';
   styleUrls: ['./decisions-list.component.css']
 })
 export class DecisionsListComponent implements OnInit {
-  displayedColumns = ['decisionId', 'decisionName', 'createDate', 'alternatives', 'criterion', 'note'];
+  displayedColumns = ['decisionId', 'decisionName', /*'createDate', 'alternatives', 'criterion',*/ 'note'];
   decisions: Decision[];
   decisionData: DecisionData;
   dataSource: DecisionDataSource | null;
@@ -102,7 +102,7 @@ export class DecisionDataSource extends DataSource<any> {
 
   getSortedData(): Decision[] {
     const data = this._decisionData.data.slice().filter((item: Decision) => {
-      const searchStr = (item.title + item.id).toLowerCase();
+      const searchStr = (/*item.title + */""+item._id).toLowerCase();
       return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
     });
 
@@ -113,9 +113,9 @@ export class DecisionDataSource extends DataSource<any> {
       let propertyB: number|string = '';
 
       switch (this._sort.active) {
-        case 'decisionId': [propertyA, propertyB] = [a.id, b.id]; break;
-        case 'decisionName': [propertyA, propertyB] = [a.title, b.title]; break;
-        case 'alternatives': [propertyA, propertyB] = [a.decisionArray.length, b.decisionArray.length]; break;
+        case 'decisionId': [propertyA, propertyB] = [a._id, b._id]; break;
+        //case 'decisionName': [propertyA, propertyB] = [a.title, b.title]; break;
+        case 'alternatives': [propertyA, propertyB] = [a._decisionArray.length, b._decisionArray.length]; break;
       }
 
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

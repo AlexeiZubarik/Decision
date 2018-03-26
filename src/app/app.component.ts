@@ -8,22 +8,6 @@ import { Router } from '@angular/router';
   providers: []
 })
 export class AppComponent implements OnInit {
-  title = 'Decision';
-  
-  constructor(private router: Router) {}
-
-  goHome() {
-    this.router.navigate(['']);
-  }
-
-  goCreateDecision() {
-    this.router.navigate(['createdecision']);
-  }
-
-  goViewDecision() {
-    this.router.navigate(['viewdecision']);
-  }
-
   ngOnInit() {    
   }  
 }

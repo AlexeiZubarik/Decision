@@ -15,6 +15,11 @@ import { DecisionService } from '../services/decision.service';
 import { CreateDecisionService } from './shared/create-decision.service';
 import { InstructionComparisonValueComponent } from './instruction-comparison-value/instruction-comparison-value.component';
 import { PairedComparisomComponent } from './paired-comparisom/paired-comparisom.component';
+import { EndTreeComponent } from './end-tree/end-tree.component';
+import { PairedComparisonComponentComponent } from './paired-comparison-component/paired-comparison-component.component';
+import { ViewTreeComponent } from './end-tree/view-tree/view-tree.component';
+import { EditAlternativComponent } from './create-alternative/edit-alternativ/edit-alternativ.component';
+import { EditCriteriaComponent } from './create-criterion/edit-criteria/edit-criteria.component';
 
 @NgModule({
   imports: [
@@ -30,7 +35,12 @@ import { PairedComparisomComponent } from './paired-comparisom/paired-comparisom
     AddValueCriterionComponent,
     DecisionFormComponent,
     InstructionComparisonValueComponent,
-    PairedComparisomComponent
+    PairedComparisomComponent,
+    EndTreeComponent,
+    PairedComparisonComponentComponent,
+    ViewTreeComponent,
+    EditAlternativComponent,
+    EditCriteriaComponent
   ],
   providers: [
     DecisionService,
