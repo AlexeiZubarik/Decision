@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Decision } from '../../shared/decision';
-
+import { Location } from '@angular/common';
 import { DecisionService } from '../../services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
-
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-decision-form',
@@ -14,9 +13,12 @@ import { MatSnackBar } from '@angular/material';
 })
 export class DecisionFormComponent implements OnInit {
   newDecisionTitle = '';
+  note = '';
   decisions: Decision[];
 
   constructor(
+    private location: Location,
+    private router: Router,
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService,
     public snackBar: MatSnackBar) {
@@ -24,12 +26,17 @@ export class DecisionFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.decisionService.getDecisions().subscribe(decisions => this.decisions = decisions);
   }
 
-  create() {
-    this.openSnackBar(this.newDecisionTitle, 'Create');
-    this.createDecisionService.createTitleDecision(this.newDecisionTitle);
+  goNext() {
+    this.decisionService.saveDecision(this.newDecisionTitle,this.note).subscribe( data => 
+      {
+        localStorage.setItem('idDecision', JSON.stringify(data));
+        this.openSnackBar(this.newDecisionTitle, 'Create');
+        this.createDecisionService.createTitleNoteDecision(this.newDecisionTitle,this.note);
+        this.router.navigate(['createalternative']);
+      });
+    
   }
 
   openSnackBar(message: string, action: string) {
@@ -37,4 +44,10 @@ export class DecisionFormComponent implements OnInit {
       duration: 2000
     });
   }
+
+  goBack(): void {
+    this.location.back();
+    this.createDecisionService.titleDecision = null;
+  }
+
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { Decision } from 'app/shared/decision';
+import { User } from 'app/shared/user';
 
 @Injectable()
 export class InMemoryDataService implements InMemoryDbService {
@@ -234,13 +235,18 @@ export class InMemoryDataService implements InMemoryDbService {
           }
         ]
       },
-      {
+      /*{
         id: 3,
         title: 'Decision 3',
         decisionArray: [{}]
-      },
+      },*/
     ];
 
     return { decisions };
+  }
+  createUser()
+  {
+    let user = new User();
+    return user;
   }
 }

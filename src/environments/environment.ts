@@ -5,6 +5,5 @@
 
 export const environment = {
   production: false,
-  host: './app/data/',
-  dataList: 'data.json'
+  host: 'localhost:8080/'
 };

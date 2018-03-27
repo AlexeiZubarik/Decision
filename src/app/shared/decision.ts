@@ -1,12 +1,39 @@
 export class Decision {
-  id: number;
+  public id: number;
+  public name: string;
+  public note: string;
+  public decisionArray: DecisionArray[];
+  constructor(){}
+  
 
-  constructor(
-    public title: string,
-    public dateCreate: Date,
-    public note: string,
-    public decisionArray: DecisionArray[]
-  ) {}
+  get _id():number{
+    return this.id
+  }
+  set _id(id:number)
+  {
+    this.id = id;
+  }
+  get _name():string{
+    return this.name
+  }
+  set _name(name:string)
+  {
+    this.name = name;
+  }
+  get _note():string{
+    return this.note
+  }
+  set _note(note:string)
+  {
+    this.note = note;
+  }
+  get _decisionArray():DecisionArray[]{
+    return this.decisionArray
+  }
+  set _decisionArray(decisionArray:DecisionArray[])
+  {
+    this.decisionArray = decisionArray;
+  }
 }
 
 export class DecisionArray {
@@ -22,10 +49,10 @@ export class CriteriaArray {
   constructor(
     public id: number,
     public name: string = '',
-    public rate: number = 1,
-    public value: string = '',
-    public valueRate: number = 1,
-    public criterionPriority: number = 1,
-    public valuePriority: number = 1
+    public rate: number = null,
+    public value: string = null,
+    public valueRate: number = null,
+    public criterionPriority: number = null,
+    public valuePriority: number = null
   ) {}
 }

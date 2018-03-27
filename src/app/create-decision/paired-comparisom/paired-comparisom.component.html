@@ -1,0 +1,27 @@
+<form>
+    <h1>
+        Осуществите попарные сравнения критериев.
+    </h1>
+    <h3>
+         Осталось {{counter}} сравнений
+    </h3>
+     <div>
+         <h3 *ngIf="choose">{{firstCriteria}} в сравнении с {{secondCriteria}} имеет</h3>
+         <h3 *ngIf="!choose">{{secondCriteria}} в сравнении с {{firstCriteria}} имеет</h3>
+    
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedValue" name="value" >
+          <mat-option *ngFor="let value of values" [value]="value.value">
+           {{value.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+  <br>
+  <div>
+
+  <button mat-raised-button (click)="swap()">Поменять местами критерии в фразе</button>
+  <button mat-raised-button (click)="saveChoose()">Сохранить</button>
+  </div>
+</form>
+

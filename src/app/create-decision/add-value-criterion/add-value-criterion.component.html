@@ -3,22 +3,58 @@
     <h1>{{ title }}</h1>
   </header>
 </mat-toolbar>
+<br>
+<mat-expansion-panel (opened)="panelOpenState = true"
+(closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Instruction
+    </mat-panel-title>
+    <mat-panel-description>
+      {{panelOpenState ? 'closed' : 'open to read again'}} 
+    </mat-panel-description>
+  </mat-expansion-panel-header>
 
+  <pre>
+    <h3>
+      Сравните на сколько одно из значений критерия важнее для Вас чем другое в соответствии со шкалой: 
+      - равнозначные критерии (одинаково важны при выборе)
+      - между равнозначностью и умеренным превосходством
+      - умеренное превосходство одного критерия над другим
+      - между умеренным и сильным превосходством
+      - сильное превосходство одного критерия над другим
+      - между сильным и очень сильным превосходством
+      - очень сильное превосходство одного критерия над другим
+      - между очень сильным и высшим превосходством
+      - высшее (крайнее) превосходство  одного критерия над другим. 
+      
+    </h3>
+  </pre>
+
+</mat-expansion-panel>
+<br>
+<br>
 <table *ngIf="decision">
   <thead>
     <tr>
+      <th>Важно <br> минимальное<br>значение</th>
       <th></th>
       <th *ngFor="let alternative of decisionArray">{{ alternative.name }}</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let criteria of decisionArray[0].criteriaArray">
-      <td>{{ criteria.name }}</td>
-      <td *ngFor="let alternative of decisionArray">{{ alternative.criteriaArray[criteria.id - 1]['valueRate'] }}</td>
-    </tr>
+      <tr *ngFor="let number of decisionArray[0].criteriaArray; index as i">
+        <th><mat-checkbox  [(ngModel)]="minRate[i]" id = {{i}}></mat-checkbox></th>
+        <th> {{number.name}}</th>
+        <th *ngFor="let alternative of decisionArray">
+          <mat-input-container class="example-full-width" style="margin-left:20px;margin-right:20px;width:100px;">
+            <input  matInput [(ngModel)]="alternative.criteriaArray[i].value" id = {{alternative.criteriaArray[i].id}} required >  
+          </mat-input-container>
+        </th>
+      </tr>
   </tbody>
 </table>
-
+<br>
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
@@ -28,11 +64,10 @@
       <button mat-raised-button (click)="goCreateAlternative()">ADD ALTERNATIVE</button>
     </td>
     <td>
-      <button mat-raised-button (click)="saveDecision()">SAVE DECISION</button>
+      <button mat-raised-button (click)="saveDecision(form)">SAVE DECISION</button>
     </td>
   </tr>
 </table>
-
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
