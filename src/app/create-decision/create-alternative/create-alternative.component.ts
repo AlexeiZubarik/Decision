@@ -18,7 +18,9 @@ import { MatDialog } from '@angular/material';
 export class CreateAlternativeComponent implements OnInit {
   title = 'Create Alternative';
   newAlternativeName = '';
+  answer : boolean = true;
   decisionArray: DecisionArray[];
+  flag : string ;
 
   constructor(
     private router: Router,
@@ -30,41 +32,85 @@ export class CreateAlternativeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.decisionService.getDecision().subscribe(data=>{
-      this.decisionArray = data.decisionArray;
-    });
+    this.flag = this.router.url.substring(this.router.url.length-1,this.router.url.length);
+    if(localStorage.getItem("currentUser"))
+    {
+      this.decisionService.getDecision().subscribe(data=>{
+        this.decisionArray = data.decisionArray;
+      });
+    }
+    this.decisionArray = this.createDecisionService.getDecisionArray();
   }
 
   delete(alternative: DecisionArray) {
-    this.decisionService.deleteAlternative( alternative.id).subscribe(data=>
-      {
-        if(data==1)
+    if(localStorage.getItem("currentUser")!=null)
+    {
+      this.decisionService.deleteAlternative( alternative.id).subscribe(data=>
         {
-          this.decisionService.getDecision().subscribe(data=>{
+          if(data==1)
+          {
+            this.decisionService.getDecision().subscribe(data=>{
             this.decisionArray = data.decisionArray;
-          });
-        }
-      });
+            });
+          }
+         });
+    }
+    else{
+      this.createDecisionService.deleteAlternativeWithoustAuth(alternative);
+    }
   }
 
   create() {
     let name = this.newAlternativeName;
-    this.decisionService.createAlternative(name).subscribe( data => 
-      {
-        let number: number;
-        number = data;
-        let alternative = new DecisionArray( number , name);
-        this.decisionArray.push(alternative);
-      });
+    if(localStorage.getItem("currentUser")!=null)
+    {
+      this.decisionService.createAlternative(name).subscribe( data => 
+        {
+          this.decisionArray.push(data);
+        });
+    }
+    else{
+      this.createDecisionService.createAlternativeWithoutAuth(this.newAlternativeName);
+    }
+    
   }
+
+  
 
   goBack(): void {
     this.location.back();
   }
 
   goNext() {
-    this.router.navigate(['createcriterion']);
+    this.answer = true;
+    for(let alternativ of this.decisionArray)
+    {
+      if(alternativ.url!=null)
+      {
+        
+        this.answer = false;
+      }
+    }
+    if(this.answer !=  false)
+    {
+    if(this.flag == '1')
+    {
+      this.router.navigate(['createcriterion',1]);
+    }
+    else{
+      if( this.flag == '2')
+      {
+        this.router.navigate(['addvaluecriterion']);
+      }
+    }
   }
+  else{
+    this.router.navigate(['parsingcriteria']);
+  }
+  }
+
+   
+  
 
   editAlternative(alternative: DecisionArray): void {
     let dialogRef = this.dialog.open(EditAlternativComponent, {
@@ -76,10 +122,10 @@ export class CreateAlternativeComponent implements OnInit {
       if(result != undefined)
       {
         alternative.name = result;
-        
-        this.decisionService.editAlternative(alternative).subscribe( data => 
+        if(localStorage.getItem("currentUser"))
         {
-        });
+          this.decisionService.editAlternative(alternative).subscribe( data => {});
+        }
       }
     });
   }

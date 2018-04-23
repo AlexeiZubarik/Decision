@@ -12,6 +12,7 @@ import { EndTreeComponent } from 'app/create-decision/end-tree/end-tree.componen
 import { PairedComparisonComponentComponent } from 'app/create-decision/paired-comparison-component/paired-comparison-component.component';
 import { EditAlternativComponent } from 'app/create-decision/create-alternative/edit-alternativ/edit-alternativ.component';
 import { EditCriteriaComponent } from 'app/create-decision/create-criterion/edit-criteria/edit-criteria.component';
+import { ParsingCriteriaComponent } from 'app/create-decision/parsing-criteria/parsing-criteria.component';
 
 const createDecisionRoutes: Routes = [
   { path: 'createdecision',
@@ -23,12 +24,27 @@ const createDecisionRoutes: Routes = [
       },
     ]
   },
-  { path: 'createalternative', component: CreateAlternativeComponent },
-  { path: 'createcriterion', component: CreateCriterionComponent },
-  { path: 'addvaluecriterion', component: AddValueCriterionComponent },
+  { path: 'createalternative', component: CreateAlternativeComponent ,
+  children: [
+    {
+      path: ':flag',
+      component: CreateAlternativeComponent
+    },
+  ]
+  },
+  { path: 'createcriterion',component: CreateCriterionComponent,
+  children: [
+    {
+      path: ':flag',
+      component: CreateCriterionComponent
+    },
+  ]
+  },
+  { path: 'addvaluecriterion', component: AddValueCriterionComponent},
   { path: 'instructionComparisonValueComponent', component: InstructionComparisonValueComponent },
   { path: 'pairedComparisomComponent', component: PairedComparisomComponent },
   { path: 'endTree', component: EndTreeComponent},
+  { path: 'parsingcriteria', component: ParsingCriteriaComponent},
   { path: 'pairedComparisonCriteriaComponent', component: PairedComparisonComponentComponent}
 ];
 

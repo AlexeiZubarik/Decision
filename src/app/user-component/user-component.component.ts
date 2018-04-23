@@ -23,4 +23,8 @@ export class UserComponentComponent{
     this.activeLinkRegister = true;
     this.activeLinkLogin = false;
   }
+  close()
+  {
+    window.close();
+  }
 }

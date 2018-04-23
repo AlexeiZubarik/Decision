@@ -13,10 +13,10 @@ import { ValidationData } from 'app/services/validationData';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent  {
-  protected user: User = new User();
+  public user: User = new User();
   isPasswordConfirm = false;
   passwordConfirm: string;
-  protected errorMessage: string;
+  public errorMessage: string;
   form: FormGroup;
   formErrors = {
     passwordConfirm: ''
@@ -39,6 +39,8 @@ export class SignUpComponent  {
   }
   register(data: any) {
     this.userService.register(this.user).subscribe(
+      data =>{
+        window.document.getElementById("closeButton").click();},
       error =>{
         console.log(this.errorMessage = error.json().message);
       })

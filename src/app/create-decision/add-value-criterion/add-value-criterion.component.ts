@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RoutesRecognized } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Decision, DecisionArray, CriteriaArray } from 'app/shared/decision';
@@ -30,7 +30,7 @@ export class AddValueCriterionComponent implements OnInit {
   decisionArray: DecisionArray[];
   criteriaArray: CriteriaArray[];
   minRate: boolean[] = [];
-
+  currentLocation;
   constructor(
     private router: Router,
     private location: Location,
@@ -38,39 +38,74 @@ export class AddValueCriterionComponent implements OnInit {
     private decisionService: DecisionService,
     private snackBar: MatSnackBar,
     private http:Http
-  ) { }
+  ) 
+    { 
+  }
 
   ngOnInit() {
-      this.decisionService.getDecision().subscribe(data=>{
-      this.decision = data;
-      this.decisionArray = this.decision.decisionArray;
-      for( let i in this.decision.decisionArray[0].criteriaArray )
-      {
-          this.minRate[i] = false;
+      //this.currentLocation = this.location.path(); 
+      if(localStorage.getItem("currentUser")!=null)
+      { 
+        this.decisionService.getDecision().subscribe(data=>{
+        this.decision = data;
+        this.decisionArray = this.decision.decisionArray;
+        for( let i in this.decision.decisionArray[0].criteriaArray )
+        {
+            this.minRate[i] = false;
+        }
+        });
       }
-    } 
-  );
+      else{
+        this.decision = this.createDecisionService.createDecisionWithoutAuth();
+        this.decisionArray = this.decision.decisionArray;
+        for( let i in this.decision.decisionArray[0].criteriaArray )
+      {
+            this.minRate[i] = false;
+      }
+      }
+      
   }
 
   goBack(): void {
-    this.location.back();
+    //this.location.back();
   }
 
   goNext() {
-    if(this.answer == true){
-      this.router.navigate(['pairedComparisomComponent']);
+    if(localStorage.getItem("currentUser")==null)
+    {
+      this.saveDecision();
+      this.decisionService.getDecisionWithoutAuth(this.decision).subscribe(data=>
+      {
+        this.decision = data;
+        this.createDecisionService.setDecision(this.decision);
+        this.decisionService.setDecisionWithoutAuth(this.decision).subscribe(data=>{
+          if(data == true){
+            this.router.navigate(['pairedComparisomComponent']);
+          }
+          else{
+            this.router.navigate(['pairedComparisonCriteriaComponent']);
+          }
+         });
+      })
     }
     else{
-      this.router.navigate(['pairedComparisonCriteriaComponent']);
+      if(this.answer == true){
+        this.router.navigate(['pairedComparisomComponent']);
+      }
+      else{
+        this.router.navigate(['pairedComparisonCriteriaComponent']);
+      }
     }
+    
+    
   }
 
   goCreateAlternative() {
-    this.router.navigate(['createalternative']);
+    this.router.navigate(['createalternative',2]);
   }
 
   goCreateCriterion() {
-    this.router.navigate(['createcriterion']);
+    this.router.navigate(['createcriterion',2]);
   }
 
   saveDecision() {
@@ -91,9 +126,11 @@ export class AddValueCriterionComponent implements OnInit {
           }
         }
     }
-    this.decisionService.setDecision(this.decision).subscribe(data=>{
-      this.answer = data;
-    });
+    if(localStorage.getItem("currentUser")!=null){
+      this.decisionService.setDecision(this.decision).subscribe(data=>{
+       this.answer = true;
+      }); 
+    }
   }
 
   openSnackBar(message: string, action: string) {
