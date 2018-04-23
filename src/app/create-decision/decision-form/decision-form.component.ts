@@ -29,14 +29,17 @@ export class DecisionFormComponent implements OnInit {
   }
 
   goNext() {
+    if(localStorage.getItem("currentUser")!=null)
+    {
     this.decisionService.saveDecision(this.newDecisionTitle,this.note).subscribe( data => 
       {
         localStorage.setItem('idDecision', JSON.stringify(data));
-        this.openSnackBar(this.newDecisionTitle, 'Create');
-        this.createDecisionService.createTitleNoteDecision(this.newDecisionTitle,this.note);
-        this.router.navigate(['createalternative']);
+        
       });
-    
+    }
+    this.openSnackBar(this.newDecisionTitle, 'Create');
+    this.createDecisionService.createTitleNoteDecision(this.newDecisionTitle,this.note);
+    this.router.navigate(['createalternative',1]);  
   }
 
   openSnackBar(message: string, action: string) {

@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import { User } from 'app/shared/user';
 import { AuthenticationService } from 'app/services/authentification-service';
 import { UserService } from 'app/services/user-service';
+import { $ } from 'protractor';
+import { UserComponentComponent } from 'app/user-component/user-component.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,8 +14,9 @@ import { UserService } from 'app/services/user-service';
 })
 export class SignInComponent{
   error: string;
+  
   protected change: boolean = false;
-  protected user: User = new User();
+  public user: User = new User();
   constructor(private authenticationService: AuthenticationService,
               private userServise: UserService,
               private router: Router) {
@@ -33,7 +36,9 @@ export class SignInComponent{
       .subscribe(
         data => {
           localStorage.setItem('currentUser', JSON.stringify(data));
-          location.href="/createdecision";
+          window.document.getElementById("closeButton").click();
+          
+
         },
         error => {
           this.loading = false;

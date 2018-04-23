@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CreateDecisionService } from 'app/create-decision/shared/create-decision.service';
 import { DecisionService } from 'app/services/decision.service';
 import { MatSnackBar } from '@angular/material';
+import { DecisionWithCompareArray } from 'app/shared/DecisionWithCompareArray';
 
 @Component({
   selector: 'app-paired-comparisom',
@@ -13,6 +14,7 @@ import { MatSnackBar } from '@angular/material';
 export class PairedComparisomComponent implements OnInit {
   title="Попарное сравнение критериев"
   decisionArray: DecisionArray[];
+  decisionWithCompareArray: DecisionWithCompareArray;
   selectedValue: number;
   decision: Decision;
   criteriaArray: CriteriaArray[];
@@ -22,6 +24,7 @@ export class PairedComparisomComponent implements OnInit {
   line:number = 1;
   column:number = 0;
   choose:boolean = true;
+  object : Object[] = new Array<Object>();
   compareCriteria : number[][];
   timeArray : any[] = new Array();
   compareArray : number = 0;
@@ -44,7 +47,9 @@ export class PairedComparisomComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.decisionService.getDecision().subscribe(data=>{
+    if(localStorage.getItem("currentUser")!=null)
+    {
+      this.decisionService.getDecision().subscribe(data=>{
       this.decision = data;
       this.decisionArray = this.decision.decisionArray;
       this.criteriaArray = this.decisionArray[0].criteriaArray;
@@ -52,7 +57,17 @@ export class PairedComparisomComponent implements OnInit {
       this.compareCriteria = new Array(this.criteriaArray.length);
       this.firstCriteria = this.criteriaArray[0].name;
       this.secondCriteria = this.criteriaArray[1].name;
-    });
+      });
+    }
+    else{
+      this.decision = this.createDecisionService.getDecision();
+      this.decisionArray = this.decision.decisionArray;
+      this.criteriaArray = this.decisionArray[0].criteriaArray;
+      this.counter = this.doFact(this.criteriaArray.length-1)-1;
+      this.compareCriteria = new Array(this.criteriaArray.length);
+      this.firstCriteria = this.criteriaArray[0].name;
+      this.secondCriteria = this.criteriaArray[1].name;
+    }
     
   }
 
@@ -107,12 +122,22 @@ export class PairedComparisomComponent implements OnInit {
       }
     }
     else{
-      this.decisionService.sendPairedCompareCriteria(this.compareCriteria).subscribe(data=>{
-        this.snackBar.open("Все критерии были попарно сравнены", "action", {
-          duration: 2000
-        });
-        this.router.navigate(['endTree']);
-      });
+        if(localStorage.getItem("currentUser")!=null){
+          this.decisionService.sendPairedCompareCriteria(this.compareCriteria).subscribe(data=>{
+            this.snackBar.open("Все критерии были попарно сравнены", "action", {
+              duration: 2000
+            });
+            this.router.navigate(['endTree']);
+          });
+        }
+        else{
+          this.decisionWithCompareArray = new DecisionWithCompareArray(this.decision,this.compareCriteria);
+          this.decisionService.sendPairedCompareCriteriaWithoutAuth(this.decisionWithCompareArray).subscribe(data=>{
+            this.createDecisionService.setDecision(data);
+            this.router.navigate(['endTree']);
+          }
+        );
+        }
       }
     }     
   }

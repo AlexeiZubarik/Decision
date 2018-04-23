@@ -1,0 +1,14 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<table>
+    <tbody>
+        <tr *ngFor="let number of criteriaArray; index as i">
+                <mat-checkbox class="example-margin" [(ngModel)]="checkBoxArray[i]">{{criteriaArray[i]}}</mat-checkbox>
+        </tr>
+    </tbody>
+</table>
+
+<button mat-raised-button type="submit" (click)="goNext()">CONFIRM</button>

@@ -20,6 +20,7 @@ import { PairedComparisonComponentComponent } from './paired-comparison-componen
 import { ViewTreeComponent } from './end-tree/view-tree/view-tree.component';
 import { EditAlternativComponent } from './create-alternative/edit-alternativ/edit-alternativ.component';
 import { EditCriteriaComponent } from './create-criterion/edit-criteria/edit-criteria.component';
+import { ParsingCriteriaComponent } from './parsing-criteria/parsing-criteria.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { EditCriteriaComponent } from './create-criterion/edit-criteria/edit-cri
     PairedComparisonComponentComponent,
     ViewTreeComponent,
     EditAlternativComponent,
-    EditCriteriaComponent
+    EditCriteriaComponent,
+    ParsingCriteriaComponent
   ],
   providers: [
     DecisionService,

@@ -20,11 +20,12 @@ export class PairedComparisonComponentComponent implements OnInit {
   choose:boolean = true;
   selectedValue: number;
   compareCriteria : number[][];
+  shortComapreCritria:any[]= new Array();
   timeArray : any[] = new Array();
   compareArray : number = 0;
   flag: boolean = true;
-  line:number = 1;
-  column:number = 0;
+  line:number = 0;
+  column:number = 1;
   constructor(private router: Router,
     private decisionService: DecisionService) { }
 
@@ -41,107 +42,160 @@ export class PairedComparisonComponentComponent implements OnInit {
     ];
 
   ngOnInit() {
-    this.decisionService.getCriteriaArray().subscribe(data=>{
-      this.array = data;
-      this.arrays = new Array(this.array.length-1);
-      while(this.pr<this.array.length)
+    if(localStorage.getItem("currentUser")!=null)
+    {
+      this.decisionService.getCriteriaArray().subscribe(data=>{
+        this.array = data;
+        this.arrays = new Array(this.array.length-1);
+        while(this.pr<this.array.length)
+        {
+            this.arrays[this.pr-1] = this.array[this.pr];
+            this.pr+=1;
+        }
+        this.initCriteriaNameArray();
+        this.initCriteriaValueArray();
+        this.initFirstVale();
+        this.counter = this.doFact(this.shortComapreCritria.length-1);
+      });
+    }
+    else{
+    }  
+  }
+
+  initFirstVale()
+  {
+    if(this.shortComapreCritria.length!=1)
+    {
+      this.firstCriteria = this.shortComapreCritria[0];
+      this.secondCriteria = this.shortComapreCritria[1];
+    }
+    else{
+      this.saveOnServer();
+    }
+  }
+
+  initCriteriaNameArray()
+  {
+    let flag :boolean = true;
+    for(let criteria of this.arrays)
+    {
+      flag = true;
+     
+        for(let part of this.shortComapreCritria)
+        {
+            if(criteria == part)
+            {
+              flag = false;
+            }
+        }
+      
+      if(flag!=false)
       {
-          this.arrays[this.pr-1] = this.array[this.pr];
-          this.pr+=1;
+        this.shortComapreCritria.push(criteria);
       }
-      this.firstCriteria = this.arrays[0];
-      this.secondCriteria = this.arrays[1];
-      this.counter = this.doFact(this.arrays.length-1)-1;
-      this.compareCriteria = new Array(this.arrays.length);
-    });
-    
+    }
+  }
+
+  initCriteriaValueArray()
+  {
+    this.compareCriteria = new Array(this.arrays.length);
+    for(var criteria = 0 ; criteria < this.arrays.length; criteria++)
+    {
+        this.compareCriteria[criteria] = new Array(this.arrays.length);
+        this.compareCriteria[criteria][criteria] = 1;
+    }
+    for(var criteria = 0 ; criteria < this.arrays.length; criteria++)
+    {
+        for(var doublecriteria = 0 ; doublecriteria < this.arrays.length; doublecriteria++)
+      {
+        if(this.arrays[criteria] == this.arrays[doublecriteria])
+        {
+          this.compareCriteria[criteria][doublecriteria] = 1;
+          this.compareCriteria[doublecriteria][criteria] = 1;
+        }
+      }
+    }
   }
 
   private doFact(counter: number ): number {
     return counter <= 1 ? 1 : counter + this.doFact(counter - 1);
   }
-  saveChoose(){
-    if(this.line == 1 && this.column == 0)
+
+  findIndex(criteriaName:string):number[]
+  {
+    let indexes : number[] = new Array();
+    for(var index = 0 ; index < this.arrays.length; index++)
     {
-      for(var criteria = 0 ; criteria < this.arrays.length; criteria++)
+      if(criteriaName == this.arrays[index])
       {
-        this.compareCriteria[criteria] = new Array(this.arrays.length);
-        this.compareCriteria[criteria][criteria] = 1;
+        indexes.push(index);
       }
+    }
+    return indexes;
+  }
+
+  saveAnswerInArray()
+  {
+    this.counter-=1;
+    if(this.counter ==0)
+    {
       this.saveCompare();
-      this.changeCounter();
-      if(this.arrays.length>2)
-      {
-        this.line = this.line + 1;
-        this.secondCriteria = this.arrays[this.line];
-      }
-      else{
-          this.column = this.column +1;
-      }
+      this.saveOnServer();
     }
     else
     {
-      if(this.column < (this.arrays.length-1))
+      this.saveCompare();
+      if(this.column == this.shortComapreCritria.length-1)
       {
-      if(this.line < this.arrays.length-1)
-      {
-        this.changeCounter();
-        this.saveCompare(); 
-        this.line = this.line +1;
-        this.firstCriteria = this.arrays[this.column];
-        this.secondCriteria = this.arrays[this.line];
+        this.line +=1;
+        this.column = this.line+1;
       }
-      else
-      {
-        if(this.column < (this.arrays.length-1))
-        {
-          this.saveCompare();
-          this.changeCounter();
-          this.column = this.column + 1;
-          if(this.column < (this.arrays.length-1))
-          {
-            this.line = this.column + 1;
-            this.firstCriteria = this.arrays[this.column];
-            this.secondCriteria = this.arrays[this.line];
-          }
-        }
+      else{
+        this.column +=1;
       }
+      this.firstCriteria = this.shortComapreCritria[this.line];
+      this.secondCriteria = this.shortComapreCritria[this.column];
+      this.choose  = true;
     }
-    else{
-      this.decisionService.sendPairedCompareCriterias(this.compareCriteria).subscribe(data=>{
+  }
+
+
+  saveOnServer()
+  {
+    this.decisionService.sendPairedCompareCriterias(this.compareCriteria).subscribe(data=>{
         
-        if(data == true){
-          this.router.navigate(['pairedComparisomComponent']);
-        }
-        else{
-          location.reload();
-        }
-      });
+      if(data == true){
+        this.router.navigate(['pairedComparisomComponent']);
       }
-    }     
+      else{
+        location.reload();
+      }
+    });
   }
 
   saveCompare()
   {
-    if(this.choose==true)
-    {
-      this.compareCriteria[this.column][this.line] = this.selectedValue;
-      this.compareCriteria[this.line][this.column] = 1/this.selectedValue;
-    }
-    else
-    {
-      this.compareCriteria[this.column][this.line] = 1/this.selectedValue;
-      this.compareCriteria[this.line][this.column] = this.selectedValue;
-    }
+    
+      for(let line of this.findIndex(this.shortComapreCritria[this.line]))
+      {
+        for(let column of this.findIndex(this.shortComapreCritria[this.column]))
+        {
+          if(this.choose==true)
+          {
+            this.compareCriteria[line][column] = this.selectedValue;
+            this.compareCriteria[column][line] = 1/this.selectedValue;
+          }
+          else
+          {
+            this.compareCriteria[line][column] = 1/this.selectedValue;
+            this.compareCriteria[column][line] = this.selectedValue;
+          }
+        }
+      }
+    
   }
 
-  changeCounter()
-  {
-    if(this.counter!=0)
-    {
-      this.counter = this.counter - 1;
-    }
-  }
+  
 
   swap(){
     if(this.choose==true)

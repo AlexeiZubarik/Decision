@@ -14,6 +14,7 @@ import { Jsonp } from '@angular/http/src/http';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthConfigConsts, AuthHttp } from 'angular2-jwt';
+import { DecisionWithCompareArray } from 'app/shared/DecisionWithCompareArray';
 
 @Injectable()
 export class DecisionService extends CoreService{
@@ -41,6 +42,36 @@ export class DecisionService extends CoreService{
     var id : number = +localStorage.getItem("idDecision");
     return this.authHttp.post(`${this.webService}getDecision`, id,{headers})
     .map(response => response.json() as Decision);
+  }
+
+  getCriteriaArrayName()
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME));
+    var id : number = +localStorage.getItem("idDecision");
+    return this.authHttp.post(`${this.webService}getCriteriaArrayName`, id,{headers})
+    .map(response => response.json() as string[]);
+  }
+
+  sendCriteriaArrayName(array:string[])
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME));
+    array.push(localStorage.getItem("idDecision"));
+    console.log(array);
+    return this.authHttp.post(`${this.webService}sendCriteriaArrayName`, array,{headers});
+  }
+
+  getHtml(html:string)
+  {
+    let headers = new Headers();
+    headers.append("Access-Control-Allow-Origin", "*");
+    headers.append("Access-Control-Allow-Headers", "Content-Type");
+    headers.append('Access-Control-Allow-Credentials', 'true');
+    return this.http.post(html,headers)
+    .map(response => response.json() as string);
   }
 
   editAlternative(alternative:DecisionArray)
@@ -82,7 +113,22 @@ export class DecisionService extends CoreService{
     headers.append('Authorization', localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME));
     return this.authHttp.post(`${this.webService}setDecision`, decision,{headers})
     .map(response => response.json() as boolean);
-  
+  }
+
+  setDecisionWithoutAuth(decision:Decision)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.webService}setDecisionWithoutToken`, decision,{headers})
+    .map(response => response.json() as boolean);
+  }
+
+  getDecisionWithoutAuth(decision:Decision)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.webService}getDecisionWithoutToken`, decision,{headers})
+    .map(response => response.json() as Decision);
   }
 
   sendPairedCompareCriteria(compare: number[][]){
@@ -91,6 +137,13 @@ export class DecisionService extends CoreService{
     headers.append('Authorization', localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME));
     headers.append('idDecision',localStorage.getItem("idDecision"));
     return this.authHttp.post(`${this.webService}sendPairedCompareCriteria`, compare,{headers});
+  }
+
+  sendPairedCompareCriteriaWithoutAuth(compare: DecisionWithCompareArray){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.webService}sendPairedCompareCriteriaWithoutAuth`, compare,{headers})
+    .map(response => response.json() as Decision);
   }
 
   deleteAlternative(id: number)
@@ -186,7 +239,7 @@ deleteCriteria(id: number)
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME));
     var id = localStorage.getItem("idDecision");
-    return this.http.post(`${this.webService}saveAlternative`, JSON.stringify({name,id}),{headers}).map(response => response.json());
+    return this.http.post(`${this.webService}saveAlternative`, JSON.stringify({name,id}),{headers}).map(response => response.json() as DecisionArray);
     
   }
 

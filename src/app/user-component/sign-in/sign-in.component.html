@@ -1,11 +1,11 @@
 
 <form id="login-form" #form="ngForm"  (onSubmit)="formReset(form)">
   <div class="form-group" >
-    <input align="center" type="text" [(ngModel)]="user.email" name="email" id="email"
+    <input align="center" type="text" [(ngModel)]="user._email" name="email" id="email"
            tabindex="1" class="form-control" #email="ngModel"
     value="" required >
     <br>
-    <input type="password" [(ngModel)]="user.password" name="password" id="password" tabindex="2"
+    <input type="password" [(ngModel)]="user._password" name="password" id="password" tabindex="2"
            class="form-control" #password="ngModel"
            value="">
   </div>

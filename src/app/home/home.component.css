@@ -1,7 +1,7 @@
 .header {
-  height: 300px;
-  margin-bottom: 40px;
-  background: #673ab7;
+  height: 100vh;
+
+  background: #fffbec ;
   padding-left: auto;
   padding-right: auto;
 }
@@ -12,7 +12,7 @@
 }
 
 .docs-header-headline {
-  color: rgba(255, 255, 255, 0.87);
+  color: rgb(51, 51, 51);
 }
 
 .docs-header-start {
