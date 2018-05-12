@@ -40,7 +40,7 @@ export class DecisionArray {
   constructor(
     public id: number,
     public name: string,
-    public url: string = '',
+    public url: string = null,
     public finalRate: number = 1,
     public criteriaArray: CriteriaArray[] = []
   ) {}
@@ -50,10 +50,10 @@ export class CriteriaArray {
   constructor(
     public id: number,
     public name: string = '',
-    public rate: number = null,
+    public rate: number = 0,
     public value: string = null,
     public valueRate: number = null,
-    public criterionPriority: number = null,
-    public valuePriority: number = null
+    public criterionPriority: number = 0,
+    public valuePriority: number = 0
   ) {}
 }

@@ -9,3 +9,49 @@ header h1 {
   font-size: 32px;
   font-weight: 300;
 }
+
+
+h3 {
+  font-size: 25px !important;
+}
+.container {
+  padding: 0 80px;
+
+}
+.alt-wrapper  {
+  display: flex;
+  flex-direction: row;
+}
+.alt-btns  {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+
+.alt-btns button {
+  margin-left: 20px;
+  background-color: rgb(80, 158, 237);
+  color: white;
+}
+
+form {
+  background-color: rgb(249, 249, 249);
+  box-shadow: 0 2px  5px 5px lightgrey;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 321px;
+  padding: 20px;
+  height: 130px;
+  margin-right: 20px;
+}
+
+mat-list-item {
+  border-bottom: 1px solid lightgrey;
+}
+
+
+mat-nav-list {
+  flex: 1 0 auto;
+}

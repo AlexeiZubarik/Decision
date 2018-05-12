@@ -26,6 +26,9 @@ export class DecisionFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.removeItem("idDecision");
+    this.createDecisionService.cleanCritreiaArray();
+    this.createDecisionService.cleanDecisionArray();
   }
 
   goNext() {
@@ -34,12 +37,16 @@ export class DecisionFormComponent implements OnInit {
     this.decisionService.saveDecision(this.newDecisionTitle,this.note).subscribe( data => 
       {
         localStorage.setItem('idDecision', JSON.stringify(data));
-        
+        this.openSnackBar(this.newDecisionTitle, 'Create');
+        this.createDecisionService.createTitleNoteDecision(this.newDecisionTitle,this.note);
+        this.router.navigate(['createalternative',1]); 
       });
-    }
+    } 
+    else{
     this.openSnackBar(this.newDecisionTitle, 'Create');
     this.createDecisionService.createTitleNoteDecision(this.newDecisionTitle,this.note);
-    this.router.navigate(['createalternative',1]);  
+    this.router.navigate(['createalternative',1]); 
+    }
   }
 
   openSnackBar(message: string, action: string) {

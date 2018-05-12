@@ -20,6 +20,13 @@ export class SignInComponent{
   constructor(private authenticationService: AuthenticationService,
               private userServise: UserService,
               private router: Router) {
+                this.user._email="";
+  }
+  ngOnit()
+  {
+    this.user._email="";
+    this.user._password="";
+    console.log(this.user);
   }
   checkLogin() {}
   checkPassword() {}

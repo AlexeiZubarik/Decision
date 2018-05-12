@@ -71,14 +71,14 @@ export class AddValueCriterionComponent implements OnInit {
   }
 
   goNext() {
+
     if(localStorage.getItem("currentUser")==null)
     {
       this.saveDecision();
-      this.decisionService.getDecisionWithoutAuth(this.decision).subscribe(data=>
-      {
-        this.decision = data;
-        this.createDecisionService.setDecision(this.decision);
-        this.decisionService.setDecisionWithoutAuth(this.decision).subscribe(data=>{
+        this.decisionService.setDecisionWithoutAuths(this.decision).subscribe(data=>{
+          this.createDecisionService.setDecision(data);
+          this.decisionService.getAnswer(data).subscribe(data=>{
+          this.answer = data;
           if(data == true){
             this.router.navigate(['pairedComparisomComponent']);
           }
@@ -86,8 +86,8 @@ export class AddValueCriterionComponent implements OnInit {
             this.router.navigate(['pairedComparisonCriteriaComponent']);
           }
          });
-      })
-    }
+      });
+  }
     else{
       if(this.answer == true){
         this.router.navigate(['pairedComparisomComponent']);
@@ -96,8 +96,6 @@ export class AddValueCriterionComponent implements OnInit {
         this.router.navigate(['pairedComparisonCriteriaComponent']);
       }
     }
-    
-    
   }
 
   goCreateAlternative() {
@@ -113,7 +111,7 @@ export class AddValueCriterionComponent implements OnInit {
     {
       for(let j of i.criteriaArray)
       {
-          j.valueRate = parseInt(j.value);
+          j.valueRate = parseFloat(j.value);
       }
     }
     for( let i in this.minRate )
@@ -128,7 +126,7 @@ export class AddValueCriterionComponent implements OnInit {
     }
     if(localStorage.getItem("currentUser")!=null){
       this.decisionService.setDecision(this.decision).subscribe(data=>{
-       this.answer = true;
+       this.answer = data;
       }); 
     }
   }

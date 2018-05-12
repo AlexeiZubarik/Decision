@@ -53,7 +53,7 @@ export class PairedComparisomComponent implements OnInit {
       this.decision = data;
       this.decisionArray = this.decision.decisionArray;
       this.criteriaArray = this.decisionArray[0].criteriaArray;
-      this.counter = this.doFact(this.criteriaArray.length-1)-1;
+      this.counter = this.doFact(this.criteriaArray.length-1);
       this.compareCriteria = new Array(this.criteriaArray.length);
       this.firstCriteria = this.criteriaArray[0].name;
       this.secondCriteria = this.criteriaArray[1].name;
@@ -63,7 +63,7 @@ export class PairedComparisomComponent implements OnInit {
       this.decision = this.createDecisionService.getDecision();
       this.decisionArray = this.decision.decisionArray;
       this.criteriaArray = this.decisionArray[0].criteriaArray;
-      this.counter = this.doFact(this.criteriaArray.length-1)-1;
+      this.counter = this.doFact(this.criteriaArray.length-1);
       this.compareCriteria = new Array(this.criteriaArray.length);
       this.firstCriteria = this.criteriaArray[0].name;
       this.secondCriteria = this.criteriaArray[1].name;
@@ -75,6 +75,7 @@ export class PairedComparisomComponent implements OnInit {
     return counter <= 1 ? 1 : counter + this.doFact(counter - 1);
   }
   saveChoose(){
+    this.changeCounter();
     if(this.line == 1 && this.column == 0)
     {
       for(var criteria = 0 ; criteria < this.criteriaArray.length; criteria++)
@@ -83,7 +84,6 @@ export class PairedComparisomComponent implements OnInit {
         this.compareCriteria[criteria][criteria] = 1;
       }
       this.saveCompare();
-      this.changeCounter();
       if(this.criteriaArray.length>2)
       {
         this.line = this.line + 1;
@@ -95,11 +95,9 @@ export class PairedComparisomComponent implements OnInit {
     }
     else
     {
-      if(this.column < (this.criteriaArray.length-1))
-      {
+      
       if(this.line < this.criteriaArray.length-1)
       {
-        this.changeCounter();
         this.saveCompare(); 
         this.line = this.line +1;
         this.firstCriteria = this.criteriaArray[this.column].name;
@@ -110,7 +108,6 @@ export class PairedComparisomComponent implements OnInit {
         if(this.column < (this.criteriaArray.length-1))
         {
           this.saveCompare();
-          this.changeCounter();
           this.column = this.column + 1;
           if(this.column < (this.criteriaArray.length-1))
           {
@@ -120,8 +117,8 @@ export class PairedComparisomComponent implements OnInit {
           }
         }
       }
-    }
-    else{
+      if(this.column == (this.criteriaArray.length-1))
+      {
         if(localStorage.getItem("currentUser")!=null){
           this.decisionService.sendPairedCompareCriteria(this.compareCriteria).subscribe(data=>{
             this.snackBar.open("Все критерии были попарно сравнены", "action", {
@@ -138,6 +135,7 @@ export class PairedComparisomComponent implements OnInit {
           }
         );
         }
+      
       }
     }     
   }

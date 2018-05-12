@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DecisionService } from 'app/services/decision.service';
+import { Decision } from 'app/shared/decision';
+import { CreateDecisionService } from 'app/create-decision/shared/create-decision.service';
+import { DecisionWithCompareArray } from 'app/shared/DecisionWithCompareArray';
 
 @Component({
   selector: 'app-paired-comparison-component',
@@ -17,16 +20,19 @@ export class PairedComparisonComponentComponent implements OnInit {
   firstCriteria : string;
   secondCriteria : string;
   pr: number =1;
+  decision: Decision;
   choose:boolean = true;
   selectedValue: number;
+  decisionWithCompareArray: DecisionWithCompareArray;
   compareCriteria : number[][];
-  shortComapreCritria:any[]= new Array();
-  timeArray : any[] = new Array();
+  shortComapreCritria:any[];
+  timeArray : any[];
   compareArray : number = 0;
   flag: boolean = true;
   line:number = 0;
   column:number = 1;
   constructor(private router: Router,
+    private createDecisionService: CreateDecisionService,
     private decisionService: DecisionService) { }
 
     values = [
@@ -42,11 +48,16 @@ export class PairedComparisonComponentComponent implements OnInit {
     ];
 
   ngOnInit() {
+    this.destroy();
+    
     if(localStorage.getItem("currentUser")!=null)
     {
       this.decisionService.getCriteriaArray().subscribe(data=>{
         this.array = data;
         this.arrays = new Array(this.array.length-1);
+        this.pr=1;
+        this.line = 0;
+        this.column =1;
         while(this.pr<this.array.length)
         {
             this.arrays[this.pr-1] = this.array[this.pr];
@@ -59,6 +70,24 @@ export class PairedComparisonComponentComponent implements OnInit {
       });
     }
     else{
+      this.decision = this.createDecisionService.getDecision();
+      this.decisionService.getCriteriaArrayWithoutAuth(this.decision).subscribe(data=>
+      {
+        this.array = data;
+        this.arrays = new Array(this.array.length-1);
+        this.pr=1;
+        this.line = 0;
+        this.column =1;
+        while(this.pr<this.array.length)
+        {
+            this.arrays[this.pr-1] = this.array[this.pr];
+            this.pr+=1;
+        }
+        this.initCriteriaNameArray();
+        this.initCriteriaValueArray();
+        this.initFirstVale();
+        this.counter = this.doFact(this.shortComapreCritria.length-1);
+      });
     }  
   }
 
@@ -94,6 +123,15 @@ export class PairedComparisonComponentComponent implements OnInit {
         this.shortComapreCritria.push(criteria);
       }
     }
+  }
+
+  destroy()
+  {
+    this.array = [];
+    this.arrays = [];
+    this.shortComapreCritria = new Array();
+    this.timeArray  = new Array();
+    this.compareCriteria = [];
   }
 
   initCriteriaValueArray()
@@ -162,15 +200,33 @@ export class PairedComparisonComponentComponent implements OnInit {
 
   saveOnServer()
   {
+    if(localStorage.getItem("currentUser")!=null)
+    {
     this.decisionService.sendPairedCompareCriterias(this.compareCriteria).subscribe(data=>{
         
       if(data == true){
         this.router.navigate(['pairedComparisomComponent']);
       }
       else{
-        location.reload();
+        this.ngOnInit();
       }
     });
+  }
+  else{
+    this.decisionWithCompareArray = new DecisionWithCompareArray(this.decision,this.compareCriteria);
+    this.decisionService.sendPairedCompareCriteriasWithoutAuth(this.decisionWithCompareArray).subscribe(data=>{
+      console.log(data);
+      this.createDecisionService.setDecision(data);
+      this.decisionService.getAnswer(data).subscribe(data=>{
+        if(data == true){
+          this.router.navigate(['pairedComparisomComponent']);
+        }
+        else{
+          this.ngOnInit();
+        }
+      });
+    });
+  }
   }
 
   saveCompare()
