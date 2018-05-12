@@ -107,6 +107,13 @@ export class DecisionService extends CoreService{
     .map(response => response.json() as string[]);
   }
 
+  getCriteriaArrayWithoutAuth(decision:Decision){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.webService}getCriteriaArrayWithoutAuth`,decision,{headers})
+    .map(response => response.json() as string[]);
+  }
+
   setDecision(decision:Decision){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -114,7 +121,13 @@ export class DecisionService extends CoreService{
     return this.authHttp.post(`${this.webService}setDecision`, decision,{headers})
     .map(response => response.json() as boolean);
   }
-
+  setDecisionWithoutAuths(decision:Decision)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.webService}setDecisionWithoutAuths`, decision,{headers})
+    .map(response => response.json() as Decision);
+  }
   setDecisionWithoutAuth(decision:Decision)
   {
     let headers = new Headers();
@@ -171,6 +184,21 @@ deleteCriteria(id: number)
     headers.append('Authorization', localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME));
     headers.append('idDecision',localStorage.getItem("idDecision"));
     return this.authHttp.post(`${this.webService}sendPairedCompareCriterias`, compare,{headers})
+    .map(response => response.json() as boolean);
+
+  }
+
+  sendPairedCompareCriteriasWithoutAuth(decision:DecisionWithCompareArray){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.webService}sendPairedCompareCriteriasWithoutAuth`, decision,{headers})
+    .map(response => response.json() as Decision);
+  }
+
+  getAnswer(decision:Decision){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.webService}getAnswer`, decision,{headers})
     .map(response => response.json() as boolean);
 
   }

@@ -3,40 +3,32 @@
     <h1>{{ title }}</h1>
   </header>
 </mat-toolbar>
+<div class="container">
+  <div class="alt-wrapper">
+  <form class="example-form" (ngSubmit)="create(); alternativeForm.reset();" #alternativeForm="ngForm">
+    <p>Добавьте вариант:</p>
+    <mat-input-container class="example-full-width">
+      <input matInput name="nameAlternative" [(ngModel)]="newAlternativeName" placeholder="Название варианта" required>
+    </mat-input-container>
+    <button mat-button type="submit" [disabled]="alternativeForm.form.invalid">Добавить</button>
 
-<form class="example-form" (ngSubmit)="create(); alternativeForm.reset();" #alternativeForm="ngForm">
-  <table class="example-full-width" cellspacing=20>
-    <tr>
-      <td>
-        <mat-input-container class="example-full-width">
-          <input matInput name="nameAlternative" [(ngModel)]="newAlternativeName" placeholder="Name of alternative" required>  
-        </mat-input-container>
-      </td>
-      <td>
-        <button mat-button type="submit" [disabled]="alternativeForm.form.invalid">Add</button>
-      </td>
-    </tr>    
-  </table>    
-</form>
+  </form>
 
-<mat-nav-list *ngIf="decisionArray.length">
-  <h3 mat-subheader>Alternative Add</h3>
-  <mat-list-item *ngFor="let alternative of decisionArray">
-    <h4 mat-line>{{alternative.name}}</h4>
-    <p mat-line>id: {{alternative.id}}</p>
-    <button mat-icon-button (click)="editAlternative(alternative)"><mat-icon>edit</mat-icon></button> 
-    <button mat-icon-button (click)="delete(alternative)"><mat-icon calss="exampple-icon">delete_forever</mat-icon></button>    
-  </mat-list-item>
-  <mat-divider></mat-divider>
-</mat-nav-list>
+  <mat-nav-list *ngIf="decisionArray.length">
+    <h3 mat-subheader>Список вариантов</h3>
+    <mat-list-item *ngFor="let alternative of decisionArray">
+      <h4 mat-line>{{alternative.name}}</h4>
+      <p mat-line>id: {{alternative.id}}</p>
+      <button mat-icon-button (click)="editAlternative(alternative)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button (click)="delete(alternative)"><mat-icon calss="exampple-icon">delete_forever</mat-icon></button>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-nav-list>
+  </div>
 
-<table class="example-full-width" cellspacing=20>
-  <tr>
-    <td>
-      <button mat-raised-button (click)="goBack()">CANCEL</button>
-    </td>
-    <td>
-      <button mat-raised-button type="submit" (click)="goNext()">CONFIRM</button>
-    </td>
-  </tr>
-</table>
+  <div class="alt-btns">
+    <button mat-raised-button (click)="goBack()">Вернуться назад</button>
+    <button mat-raised-button type="submit" (click)="goNext()">Далее</button>
+  </div>
+
+</div>

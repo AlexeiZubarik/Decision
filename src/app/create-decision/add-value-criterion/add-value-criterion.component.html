@@ -8,10 +8,10 @@
 (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Instruction
+      Инструкция
     </mat-panel-title>
     <mat-panel-description>
-      {{panelOpenState ? 'closed' : 'open to read again'}} 
+      {{panelOpenState ? 'closed' : 'Открыть для повторного чтения'}} 
     </mat-panel-description>
   </mat-expansion-panel-header>
 
@@ -58,23 +58,23 @@
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
-      <button mat-raised-button (click)="goCreateCriterion()">ADD CRITERIA</button>
+      <button mat-raised-button (click)="goCreateCriterion()">Добавить критерий</button>
     </td>
     <td>
-      <button mat-raised-button (click)="goCreateAlternative()">ADD ALTERNATIVE</button>
+      <button mat-raised-button (click)="goCreateAlternative()">Добавить альтернативу</button>
     </td>
     <td>
-      <button mat-raised-button (click)="saveDecision()">Save decision</button>
+      <button mat-raised-button (click)="saveDecision()">Сохранить</button>
     </td>
   </tr>
 </table>
 <table class="example-full-width" cellspacing=20>
   <tr>
     <td>
-      <button mat-raised-button (click)="goBack()">CANCEL</button>
+      <button mat-raised-button (click)="goBack()">Назад</button>
     </td>
     <td>
-      <button mat-raised-button (click)="goNext()">CONFIRM</button>
+      <button mat-raised-button (click)="goNext()">Далее</button>
     </td>
   </tr>
 </table>

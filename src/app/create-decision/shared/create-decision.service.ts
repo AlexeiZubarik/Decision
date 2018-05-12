@@ -34,6 +34,15 @@ export class CreateDecisionService  extends CoreService {
       return this.decisionArray;
     }
   
+    cleanCritreiaArray()
+    {
+      this.criteriaArray = [];
+    }
+    
+    cleanDecisionArray()
+    {
+      this.decisionArray = [];
+    }
   getCriteriaArray(): CriteriaArray[] {
     return this.criteriaArray;
   }

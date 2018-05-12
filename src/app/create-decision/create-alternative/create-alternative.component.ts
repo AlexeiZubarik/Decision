@@ -19,7 +19,7 @@ export class CreateAlternativeComponent implements OnInit {
   title = 'Create Alternative';
   newAlternativeName = '';
   answer : boolean = true;
-  decisionArray: DecisionArray[];
+  decisionArray: DecisionArray[] = [];
   flag : string ;
 
   constructor(
@@ -28,7 +28,6 @@ export class CreateAlternativeComponent implements OnInit {
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService,
     private dialog: MatDialog) {
-    this.decisionArray = [];
   }
 
   ngOnInit() {
@@ -39,7 +38,11 @@ export class CreateAlternativeComponent implements OnInit {
         this.decisionArray = data.decisionArray;
       });
     }
-    this.decisionArray = this.createDecisionService.getDecisionArray();
+    else
+    {
+      this.decisionArray = this.createDecisionService.getDecisionArray();
+    }
+ 
   }
 
   delete(alternative: DecisionArray) {
@@ -87,7 +90,6 @@ export class CreateAlternativeComponent implements OnInit {
     {
       if(alternativ.url!=null)
       {
-        
         this.answer = false;
       }
     }
