@@ -6,7 +6,7 @@ import { Decision, CriteriaArray } from 'app/shared/decision';
 
 import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditCriteriaComponent } from 'app/create-decision/create-criterion/edit-criteria/edit-criteria.component';
 import { Browser } from 'protractor/node_modules/@types/selenium-webdriver';
 
@@ -27,7 +27,8 @@ export class CreateCriterionComponent implements OnInit {
     private location: Location,
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public snackBar: MatSnackBar) {
     this.criteriaArray = [];
   }
 
@@ -85,7 +86,8 @@ export class CreateCriterionComponent implements OnInit {
   }
 
   goNext() {
-    
+    if(this.criteriaArray.length>1)
+    {
     if(this.flag == '1')
     {
     this.router.navigate(['instructionComparisonValueComponent']);
@@ -93,8 +95,13 @@ export class CreateCriterionComponent implements OnInit {
     else{
       if( this.flag == '2')
       {
-        this.router.navigate(['addvaluecriterion',1]);
+        this.router.navigate(['addvaluecriterion']);
       }
+    }
+    }
+      else
+    {
+      this.openSnackBar("Критериев должно быть больше 1","");
     }
   }
 
@@ -116,5 +123,9 @@ export class CreateCriterionComponent implements OnInit {
       }
     });
   }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
 }

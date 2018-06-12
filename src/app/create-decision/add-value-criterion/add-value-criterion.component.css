@@ -9,3 +9,48 @@ header h1 {
   font-size: 32px;
   font-weight: 300;
 }
+
+.container-fluid {
+  width: 65vw;
+}
+
+
+.crit-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.crit-table th {
+  border: 1px solid black;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.crit-table th input {
+  background-color: lightgrey;
+}
+
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 50%;
+  margin-left: 50%;
+  min-width: 500px;
+  margin-bottom: 50px;
+}
+
+.btns-next {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 25%;
+  margin-left: 75%;
+  min-width: 250px;
+
+}
+
+.btns-next button {
+  color: white;
+  background-color: #008cba;
+}
