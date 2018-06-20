@@ -46,8 +46,12 @@
       <li><a href="#">На главную</a></li>
       <li><a href="#">Контакты</a></li>
     </ul>
-    <button class="btn-primary btn" id="login-button-header" data-toggle="modal" data-target="#openModal"> <span class="glyphicon glyphicon-log-in"></span> Войти</button>
+    <button class="btn-primary btn" id="login-button-header" *ngIf="authGuard.isActivate() == false" data-toggle="modal" data-target="#openModal"> <span class="glyphicon glyphicon-log-in"></span> Войти</button>
+    <button class="btn-primary btn" id="login-button-header" *ngIf="authGuard.isActivate() == true" data-toggle="modal" data-target="#openLogout"> <span class="glyphicon glyphicon-log-in"></span> Выйти</button>
+  
   </div>
 </nav>
 <div id="openModal" class="modal fade" aria-labelledby="openModal" tabindex="-1" aria-hidden="true" role="dialog">
-  <app-user-component></app-user-component>
+  <app-user-component></app-user-component></div>
+<div id="openLogout" class="modal fade" aria-hidden="true" aria-labelledby="openLogout" tabindex="-1" role="dialog">
+    <app-logout></app-logout></div>

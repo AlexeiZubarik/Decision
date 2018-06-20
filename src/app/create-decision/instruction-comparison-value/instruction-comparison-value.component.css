@@ -1,0 +1,21 @@
+h1 {
+
+    width: 200px;
+    text-align: center;
+    margin: 50px auto;
+      font-size: 30px;
+  }
+  
+  .btn {
+    display: flex;
+    flex-direction: row-reverse;
+      padding: 0 18%;
+  }
+  
+  
+  p {
+      width: 783px;
+      margin: 0 auto;
+      word-wrap: break-word;
+  }
+  

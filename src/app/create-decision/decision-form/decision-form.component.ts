@@ -14,7 +14,8 @@ import { Router } from '@angular/router';
 export class DecisionFormComponent implements OnInit {
   newDecisionTitle = '';
   note = '';
-  decisions: Decision[];
+  flag : string ;
+  decision: Decision = null;
 
   constructor(
     private location: Location,
@@ -22,13 +23,30 @@ export class DecisionFormComponent implements OnInit {
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService,
     public snackBar: MatSnackBar) {
-    this.decisions = [];
   }
 
   ngOnInit() {
-    localStorage.removeItem("idDecision");
+    this.flag = this.router.url.substring(this.router.url.length-1,this.router.url.length);
     this.createDecisionService.cleanCritreiaArray();
     this.createDecisionService.cleanDecisionArray();
+    if(this.flag=="0")
+    {
+    localStorage.removeItem("idDecision");
+    }
+    else{
+      if(this.flag=="1")
+      {
+        this.decisionService.getDecision().subscribe(data=>{
+          this.newDecisionTitle = data.name;
+          this.note = data.note;
+        });
+      }
+    }
+  }
+
+  goNextWithoutSave()
+  {
+    this.router.navigate(['createalternative',1]); 
   }
 
   goNext() {

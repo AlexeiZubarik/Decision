@@ -6,7 +6,7 @@ import { Decision, CriteriaArray } from 'app/shared/decision';
 
 import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditCriteriaComponent } from 'app/create-decision/create-criterion/edit-criteria/edit-criteria.component';
 import { Browser } from 'protractor/node_modules/@types/selenium-webdriver';
 
@@ -27,7 +27,8 @@ export class CreateCriterionComponent implements OnInit {
     private location: Location,
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public snackBar: MatSnackBar) {
     this.criteriaArray = [];
   }
 
@@ -62,21 +63,38 @@ export class CreateCriterionComponent implements OnInit {
     }
   }
 
-  create() {
+  check(name : String)
+  {
+    for(let criteria of this.criteriaArray)
+    {
+      if(criteria.name == name)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
 
+  create() {
     let number: number;
     let name = this.newCriteriaName;
-    if(localStorage.getItem("currentUser")!=null)
+    if(this.check(name))
     {
-      this.decisionService.createCriteria(name).subscribe( data => 
-        {
-          let criteria = new CriteriaArray(this.criteriaArray.length ?
-            this.criteriaArray[this.criteriaArray.length - 1].id + 1 : 1, name);
-          this.criteriaArray.push(criteria);
-        });
-    }
+      if(localStorage.getItem("currentUser")!=null)
+      {
+        this.decisionService.createCriteria(name).subscribe( data => 
+          {
+            let criteria = new CriteriaArray(this.criteriaArray.length ?
+              this.criteriaArray[this.criteriaArray.length - 1].id + 1 : 1, name);
+            this.criteriaArray.push(criteria);
+          });
+      }
+      else{
+        this.createDecisionService.createCriteriaWithoutAuth(this.newCriteriaName);
+      }
+    } 
     else{
-      this.createDecisionService.createCriteriaWithoutAuth(this.newCriteriaName);
+      this.openSnackBar("Критерий с таким именем уже существует","");
     }
   }
 
@@ -85,16 +103,22 @@ export class CreateCriterionComponent implements OnInit {
   }
 
   goNext() {
-    
+    if(this.criteriaArray.length>1)
+    {
     if(this.flag == '1')
     {
-    this.router.navigate(['instructionComparisonValueComponent']);
+      this.router.navigate(['addvaluecriterion']);
     }
     else{
       if( this.flag == '2')
       {
-        this.router.navigate(['addvaluecriterion',1]);
+        this.router.navigate(['addvaluecriterion']);
       }
+    }
+    }
+      else
+    {
+      this.openSnackBar("Критериев должно быть больше 1","");
     }
   }
 
@@ -116,5 +140,9 @@ export class CreateCriterionComponent implements OnInit {
       }
     });
   }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
 }

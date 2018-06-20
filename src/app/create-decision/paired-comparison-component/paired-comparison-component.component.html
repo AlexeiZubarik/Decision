@@ -1,4 +1,32 @@
 <br><br><br><br><br><br><br><br>
+<mat-expansion-panel (opened)="panelOpenState = true"
+(closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      
+    </mat-panel-title>
+    <mat-panel-description>
+      {{panelOpenState ? 'Инструкция' : 'Инструкция'}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <pre>
+    <h3>
+      Сравните на сколько одно из значений критерия важнее для Вас чем другое в соответствии со шкалой:
+      - равнозначные критерии (одинаково важны при выборе)
+      - между равнозначностью и умеренным превосходством
+      - умеренное превосходство одного критерия над другим
+      - между умеренным и сильным превосходством
+      - сильное превосходство одного критерия над другим
+      - между сильным и очень сильным превосходством
+      - очень сильное превосходство одного критерия над другим
+      - между очень сильным и высшим превосходством
+      - высшее (крайнее) превосходство  одного критерия над другим.
+
+    </h3>
+  </pre>
+</mat-expansion-panel>
+<br>
 <form>
     <h1>
         Осуществите попарное сравнение значений
@@ -20,19 +48,8 @@
   </div>
   <br>
   <div>
-
   <button mat-raised-button (click)="swap()">Поменять местами критерии в фразе</button>
-  <button mat-raised-button (click)="saveAnswerInArray()">Сохранить</button>
+  <button mat-raised-button (click)="saveAnswerInArray()" *ngIf="end == false">Сохранить</button>
+  <button mat-raised-button (click)="goNext()" *ngIf="end == true">Далее</button>
   </div>
 </form>
-
-<table class="example-full-width" cellspacing=20>
-    <tr>
-      <td>
-        <button mat-raised-button >CANCEL</button>
-      </td>
-      <td>
-        <button mat-raised-button (click)="goNext()">CONFIRM</button>
-      </td>
-    </tr>
-  </table>

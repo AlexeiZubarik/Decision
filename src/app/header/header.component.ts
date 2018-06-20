@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthGuard } from 'app/services/authGuard';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,7 @@ export class HeaderComponent implements OnInit {
   title = 'Decision';
   
   constructor(
+    public authGuard: AuthGuard,
     private router: Router) {}
 
   goHome() {

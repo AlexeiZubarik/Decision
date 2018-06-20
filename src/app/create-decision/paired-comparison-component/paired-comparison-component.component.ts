@@ -4,6 +4,7 @@ import { DecisionService } from 'app/services/decision.service';
 import { Decision } from 'app/shared/decision';
 import { CreateDecisionService } from 'app/create-decision/shared/create-decision.service';
 import { DecisionWithCompareArray } from 'app/shared/DecisionWithCompareArray';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-paired-comparison-component',
@@ -11,7 +12,6 @@ import { DecisionWithCompareArray } from 'app/shared/DecisionWithCompareArray';
   styleUrls: ['./paired-comparison-component.component.css']
 })
 export class PairedComparisonComponentComponent implements OnInit {
-  snackBar: any;
   answer: boolean = true;
   title="Попарное сравнение знайчений"
   array : string[];
@@ -30,10 +30,12 @@ export class PairedComparisonComponentComponent implements OnInit {
   compareArray : number = 0;
   flag: boolean = true;
   line:number = 0;
+  end : boolean = false;
   column:number = 1;
   constructor(private router: Router,
     private createDecisionService: CreateDecisionService,
-    private decisionService: DecisionService) { }
+    private decisionService: DecisionService,
+    private snackBar: MatSnackBar) { }
 
     values = [
       {value: 1, viewValue: 'равновесное значение (одинаково важны при выборе)'},
@@ -49,7 +51,6 @@ export class PairedComparisonComponentComponent implements OnInit {
 
   ngOnInit() {
     this.destroy();
-    
     if(localStorage.getItem("currentUser")!=null)
     {
       this.decisionService.getCriteriaArray().subscribe(data=>{
@@ -93,14 +94,14 @@ export class PairedComparisonComponentComponent implements OnInit {
 
   initFirstVale()
   {
-    if(this.shortComapreCritria.length!=1)
-    {
+    /*if(this.shortComapreCritria.length!=1)
+    {*/
       this.firstCriteria = this.shortComapreCritria[0];
       this.secondCriteria = this.shortComapreCritria[1];
-    }
+    /*}
     else{
       this.saveOnServer();
-    }
+    }*/
   }
 
   initCriteriaNameArray()
@@ -127,6 +128,7 @@ export class PairedComparisonComponentComponent implements OnInit {
 
   destroy()
   {
+    this.end = false;
     this.array = [];
     this.arrays = [];
     this.shortComapreCritria = new Array();
@@ -205,7 +207,10 @@ export class PairedComparisonComponentComponent implements OnInit {
     this.decisionService.sendPairedCompareCriterias(this.compareCriteria).subscribe(data=>{
         
       if(data == true){
-        this.router.navigate(['pairedComparisomComponent']);
+        this.snackBar.open("Все значения критериев были попарно сравнены", "action", {
+          duration: 2000
+        });
+        this.end = true;
       }
       else{
         this.ngOnInit();
@@ -215,11 +220,13 @@ export class PairedComparisonComponentComponent implements OnInit {
   else{
     this.decisionWithCompareArray = new DecisionWithCompareArray(this.decision,this.compareCriteria);
     this.decisionService.sendPairedCompareCriteriasWithoutAuth(this.decisionWithCompareArray).subscribe(data=>{
-      console.log(data);
       this.createDecisionService.setDecision(data);
       this.decisionService.getAnswer(data).subscribe(data=>{
         if(data == true){
-          this.router.navigate(['pairedComparisomComponent']);
+            this.snackBar.open("Все значения критериев были попарно сравнены", "action", {
+            duration: 2000
+          });
+          this.end = true;
         }
         else{
           this.ngOnInit();
@@ -227,6 +234,12 @@ export class PairedComparisonComponentComponent implements OnInit {
       });
     });
   }
+  }
+
+  goNext()
+  {
+    
+    this.router.navigate(['pairedComparisomComponent']);
   }
 
   saveCompare()
@@ -264,13 +277,13 @@ export class PairedComparisonComponentComponent implements OnInit {
     }
   }
 
-  goNext() {
+  /*goNext() {
     if(this.answer == true){
       this.router.navigate(['pairedComparisomComponent']);
     }
     else{
       this.router.navigate(['pairedComparisonCriteriaComponent']);
     }
-  }
+  }*/
 
 }

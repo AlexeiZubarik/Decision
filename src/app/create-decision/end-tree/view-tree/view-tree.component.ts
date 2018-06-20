@@ -28,4 +28,23 @@ export class ViewTreeComponent implements OnInit {
     }
     
   }
+
+  changeTree()
+  {
+    this.router.navigate(['createdecision',1]);
+  }
+
+  goNext()
+  {
+    this.router.navigate(['']);
+    localStorage.removeItem("idDecision");
+  }
+  deleteTree()
+  {
+    this.decisionService.removeDecision().subscribe(data=>
+    {
+      localStorage.removeItem("idDecision");
+      this.router.navigate(['']);
+    });
+  }
 }

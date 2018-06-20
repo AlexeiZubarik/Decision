@@ -11,13 +11,24 @@ import { CriteriaArray } from 'app/shared/decision';
 })
 export class InstructionComparisonValueComponent implements OnInit {
   title = 'Instruction';
+  flag: string;
   constructor(
     private router: Router,) {
   }
   ngOnInit() {
+    this.flag = this.router.url.substring(this.router.url.length-1,this.router.url.length);
   }
   
   goNext() {
-    this.router.navigate(['addvaluecriterion']);
+    if(this.flag=="1")
+    {
+    this.router.navigate(['pairedComparisomComponent']);
+    }
+    else{
+      if(this.flag == "2")
+      {
+        this.router.navigate(['pairedComparisonCriteriaComponent']);
+      }
+    }
   }
 }

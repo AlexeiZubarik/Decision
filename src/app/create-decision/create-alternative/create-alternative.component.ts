@@ -7,7 +7,7 @@ import { Decision, DecisionArray } from 'app/shared/decision';
 import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
 import { EditAlternativComponent } from 'app/create-decision/create-alternative/edit-alternativ/edit-alternativ.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -27,7 +27,8 @@ export class CreateAlternativeComponent implements OnInit {
     private location: Location,
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -63,19 +64,36 @@ export class CreateAlternativeComponent implements OnInit {
     }
   }
 
+  check(name : String)
+  {
+    for(let alternativ of this.decisionArray)
+    {
+      if(alternativ.name == name)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
   create() {
     let name = this.newAlternativeName;
-    if(localStorage.getItem("currentUser")!=null)
+    if(this.check(name))
     {
-      this.decisionService.createAlternative(name).subscribe( data => 
-        {
-          this.decisionArray.push(data);
-        });
+      if(localStorage.getItem("currentUser")!=null)
+      {
+        this.decisionService.createAlternative(name).subscribe( data => 
+          {
+            this.decisionArray.push(data);
+          });
+      }
+      else{
+        this.createDecisionService.createAlternativeWithoutAuth(this.newAlternativeName);
+      }
     }
     else{
-      this.createDecisionService.createAlternativeWithoutAuth(this.newAlternativeName);
+      this.openSnackBar("Альтернатива с таким именем уже существует","");
     }
-    
   }
 
   
@@ -86,6 +104,8 @@ export class CreateAlternativeComponent implements OnInit {
 
   goNext() {
     this.answer = true;
+    if(this.decisionArray.length>1)
+    {
     for(let alternativ of this.decisionArray)
     {
       if(alternativ.url!=null)
@@ -108,8 +128,12 @@ export class CreateAlternativeComponent implements OnInit {
   }
   else{
     this.router.navigate(['parsingcriteria']);
+      }
+    }
+  else{
+      this.openSnackBar("Альтернатив должно быть больше 1","");
   }
-  }
+}
 
    
   
@@ -131,5 +155,9 @@ export class CreateAlternativeComponent implements OnInit {
       }
     });
   }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
 }

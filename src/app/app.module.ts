@@ -20,9 +20,11 @@ import { UserService } from 'app/services/user-service';
 import { AuthenticationService } from 'app/services/authentification-service';
 import { HeaderComponent } from './header/header.component';
 import { UserComponentModule } from 'app/user-component/user-component.module';
+import { logoutComponent } from 'app/logout/logout.component';
 import { SignInComponent } from 'app/user-component/sign-in/sign-in.component';
 import { SignUpComponent } from 'app/user-component/sign-up/sign-up.component';
 import { ValidationData } from 'app/services/validationData';
+import { AuthGuard } from 'app/services/authGuard';
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig(), http, options);
 }
@@ -32,6 +34,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AppComponent,
     HomeComponent,
     HeaderComponent,
+    logoutComponent,
     SignInComponent,
     SignUpComponent,
     UserComponentComponent
@@ -45,6 +48,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ViewDecisionModule,
     AppRoutingModule,
     MyMaterialModule
+    
   ],
   providers: [DecisionService,
     { 
@@ -54,7 +58,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     },
     UserService,
     AuthenticationService,
-    ValidationData
+    ValidationData,
+    AuthGuard
+
+
   ],
   bootstrap: [AppComponent]
 })

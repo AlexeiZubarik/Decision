@@ -13,7 +13,8 @@
       </div>
       <div class="form-field-btn">
           <button mat-raised-button (click)="goBack()">Отмена</button>
-          <button mat-raised-button type="submit" [disabled]="decisionForm.form.invalid" (click)="goNext()">Создать</button>
-  </div>
+          <button mat-raised-button type="submit" [disabled]="decisionForm.form.invalid" (click)="goNext()" *ngIf="flag == '0'">Создать</button>
+          <button mat-raised-button type="submit" [disabled]="decisionForm.form.invalid" (click)="goNextWithoutSave()" *ngIf="flag == '1'">Далее</button>
+        </div>
   </form>
 </div>
