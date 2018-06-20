@@ -63,21 +63,38 @@ export class CreateCriterionComponent implements OnInit {
     }
   }
 
-  create() {
+  check(name : String)
+  {
+    for(let criteria of this.criteriaArray)
+    {
+      if(criteria.name == name)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
 
+  create() {
     let number: number;
     let name = this.newCriteriaName;
-    if(localStorage.getItem("currentUser")!=null)
+    if(this.check(name))
     {
-      this.decisionService.createCriteria(name).subscribe( data => 
-        {
-          let criteria = new CriteriaArray(this.criteriaArray.length ?
-            this.criteriaArray[this.criteriaArray.length - 1].id + 1 : 1, name);
-          this.criteriaArray.push(criteria);
-        });
-    }
+      if(localStorage.getItem("currentUser")!=null)
+      {
+        this.decisionService.createCriteria(name).subscribe( data => 
+          {
+            let criteria = new CriteriaArray(this.criteriaArray.length ?
+              this.criteriaArray[this.criteriaArray.length - 1].id + 1 : 1, name);
+            this.criteriaArray.push(criteria);
+          });
+      }
+      else{
+        this.createDecisionService.createCriteriaWithoutAuth(this.newCriteriaName);
+      }
+    } 
     else{
-      this.createDecisionService.createCriteriaWithoutAuth(this.newCriteriaName);
+      this.openSnackBar("Критерий с таким именем уже существует","");
     }
   }
 
@@ -90,7 +107,7 @@ export class CreateCriterionComponent implements OnInit {
     {
     if(this.flag == '1')
     {
-    this.router.navigate(['instructionComparisonValueComponent']);
+      this.router.navigate(['addvaluecriterion']);
     }
     else{
       if( this.flag == '2')

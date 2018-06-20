@@ -66,10 +66,6 @@ export class AddValueCriterionComponent implements OnInit {
       
   }
 
-  goBack(): void {
-    //this.location.back();
-  }
-
   goNext() {
 
     if(localStorage.getItem("currentUser")==null)
@@ -80,20 +76,20 @@ export class AddValueCriterionComponent implements OnInit {
           this.decisionService.getAnswer(data).subscribe(data=>{
           this.answer = data;
           if(data == true){
-            this.router.navigate(['pairedComparisomComponent']);
+            this.router.navigate(['instructionComparisonValueComponent',1]);
           }
           else{
-            this.router.navigate(['pairedComparisonCriteriaComponent']);
+            this.router.navigate(['instructionComparisonValueComponent',2]);
           }
          });
       });
   }
     else{
       if(this.answer == true){
-        this.router.navigate(['pairedComparisomComponent']);
+        this.router.navigate(['instructionComparisonValueComponent',1]);
       }
       else{
-        this.router.navigate(['pairedComparisonCriteriaComponent']);
+        this.router.navigate(['instructionComparisonValueComponent',2]);
       }
     }
   }

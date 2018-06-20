@@ -11,10 +11,10 @@
 (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Инструкция
+      
     </mat-panel-title>
     <mat-panel-description>
-      {{panelOpenState ? 'Закрыть' : 'Открыть для повторного чтения'}}
+      {{panelOpenState ? 'Инструкция' : 'Инструкция'}}
     </mat-panel-description>
   </mat-expansion-panel-header>
 
@@ -64,9 +64,7 @@
       <button mat-raised-button (click)="saveDecision()">Сохранить</button>
 </div>
 <div class="btns-next">
-      <button mat-raised-button (click)="goBack()">Назад</button>
-
-      <button mat-raised-button (click)="goNext()">Далее</button>
-    </div>
+  <button mat-raised-button (click)="goNext()">Далее</button>
+</div>
 </div>
 </main>

@@ -35,6 +35,15 @@ export class DecisionService extends CoreService{
       .catch(this.handleError);
   }
 
+  removeDecision()
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', localStorage.getItem(AuthConfigConsts.DEFAULT_TOKEN_NAME));
+    var id : number = +localStorage.getItem("idDecision");
+    return this.authHttp.post(`${this.webService}removeDecision`, id,{headers});
+  }
+
   getDecision(){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

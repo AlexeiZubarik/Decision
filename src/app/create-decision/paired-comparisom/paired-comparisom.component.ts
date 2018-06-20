@@ -21,15 +21,15 @@ export class PairedComparisomComponent implements OnInit {
   counter: number = 0;
   firstCriteria : string;
   secondCriteria : string;
-  line:number = 1;
-  column:number = 0;
+  line:number = 0;
+  column:number = 1;
   choose:boolean = true;
   object : Object[] = new Array<Object>();
   compareCriteria : number[][];
   timeArray : any[] = new Array();
   compareArray : number = 0;
   flag: boolean = true;
-  
+  end : boolean = false;
     values = [
       {value: 1, viewValue: 'равновесное значение (одинаково важны при выборе)'},
       {value: 2, viewValue: 'между равнозначностью и умеренным превосходством'},
@@ -47,6 +47,7 @@ export class PairedComparisomComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.end = false;
     if(localStorage.getItem("currentUser")!=null)
     {
       this.decisionService.getDecision().subscribe(data=>{
@@ -54,7 +55,7 @@ export class PairedComparisomComponent implements OnInit {
       this.decisionArray = this.decision.decisionArray;
       this.criteriaArray = this.decisionArray[0].criteriaArray;
       this.counter = this.doFact(this.criteriaArray.length-1);
-      this.compareCriteria = new Array(this.criteriaArray.length);
+      this.initCriteriaValueArray();
       this.firstCriteria = this.criteriaArray[0].name;
       this.secondCriteria = this.criteriaArray[1].name;
       });
@@ -64,16 +65,38 @@ export class PairedComparisomComponent implements OnInit {
       this.decisionArray = this.decision.decisionArray;
       this.criteriaArray = this.decisionArray[0].criteriaArray;
       this.counter = this.doFact(this.criteriaArray.length-1);
-      this.compareCriteria = new Array(this.criteriaArray.length);
       this.firstCriteria = this.criteriaArray[0].name;
       this.secondCriteria = this.criteriaArray[1].name;
+      this.initCriteriaValueArray();
     }
-    
+   
+  }
+
+  initCriteriaValueArray()
+  {
+    this.compareCriteria = new Array(this.criteriaArray.length);
+    for(var criteria = 0 ; criteria < this.criteriaArray.length; criteria++)
+    {
+        this.compareCriteria[criteria] = new Array(this.criteriaArray.length);
+        this.compareCriteria[criteria][criteria] = 1;
+    }
+    for(var criteria = 0 ; criteria < this.criteriaArray.length; criteria++)
+    {
+        for(var doublecriteria = 0 ; doublecriteria < this.criteriaArray.length; doublecriteria++)
+      {
+        if(this.criteriaArray[criteria] == this.criteriaArray[doublecriteria])
+        {
+          this.compareCriteria[criteria][doublecriteria] = 1;
+          this.compareCriteria[doublecriteria][criteria] = 1;
+        }
+      }
+    }
   }
 
   private doFact(counter: number ): number {
     return counter <= 1 ? 1 : counter + this.doFact(counter - 1);
   }
+
   saveChoose(){
     this.changeCounter();
     if(this.line == 1 && this.column == 0)
@@ -95,7 +118,6 @@ export class PairedComparisomComponent implements OnInit {
     }
     else
     {
-      
       if(this.line < this.criteriaArray.length-1)
       {
         this.saveCompare(); 
@@ -117,27 +139,64 @@ export class PairedComparisomComponent implements OnInit {
           }
         }
       }
-      if(this.column == (this.criteriaArray.length-1))
-      {
-        if(localStorage.getItem("currentUser")!=null){
-          this.decisionService.sendPairedCompareCriteria(this.compareCriteria).subscribe(data=>{
-            this.snackBar.open("Все критерии были попарно сравнены", "action", {
-              duration: 2000
-            });
-            this.router.navigate(['endTree']);
-          });
-        }
-        else{
-          this.decisionWithCompareArray = new DecisionWithCompareArray(this.decision,this.compareCriteria);
-          this.decisionService.sendPairedCompareCriteriaWithoutAuth(this.decisionWithCompareArray).subscribe(data=>{
-            this.createDecisionService.setDecision(data);
-            this.router.navigate(['endTree']);
-          }
-        );
-        }
-      
-      }
     }     
+  }
+
+  saveAnswerInArray()
+  {
+    this.counter-=1;
+    if(this.counter ==0)
+    {
+      this.saveCompare();
+      this.saveOnServer();
+    }
+    else
+    {
+      this.saveCompare();
+      console.log(this.column);
+      console.log(this.line);
+      console.log(this.criteriaArray.length-1);
+      console.log(this.compareCriteria);
+      if(this.column == this.criteriaArray.length-1)
+      {
+        this.line +=1;
+        this.column = this.line+1;
+      }
+      else{
+        this.column +=1;
+      }
+      this.firstCriteria = this.criteriaArray[this.line].name;
+      this.secondCriteria = this.criteriaArray[this.column].name;
+      this.choose  = true;
+    }
+  }
+
+  saveOnServer()
+  {
+    if(localStorage.getItem("currentUser")!=null){
+      this.decisionService.sendPairedCompareCriteria(this.compareCriteria).subscribe(data=>{
+        this.snackBar.open("Все критерии были попарно сравнены", "action", {
+          duration: 2000
+        });
+        this.end = true;
+      });
+    }
+    else{
+      this.decisionWithCompareArray = new DecisionWithCompareArray(this.decision,this.compareCriteria);
+      this.decisionService.sendPairedCompareCriteriaWithoutAuth(this.decisionWithCompareArray).subscribe(data=>{
+        this.createDecisionService.setDecision(data);
+        this.snackBar.open("Все критерии были попарно сравнены", "action", {
+          duration: 2000
+        });
+        this.end = true;
+      }
+    );
+    }
+  }
+
+  goNext()
+  {
+    this.router.navigate(['endTree']);
   }
 
   saveCompare()

@@ -19,7 +19,7 @@ const createDecisionRoutes: Routes = [
     component: CreateDecisionComponent,
     children: [
       {
-        path: '',
+        path: ':flag',
         component: DecisionFormComponent
       },
     ]
@@ -40,8 +40,15 @@ const createDecisionRoutes: Routes = [
     },
   ]
   },
+  { path: 'instructionComparisonValueComponent', component: InstructionComparisonValueComponent ,
+    children: [
+      {
+        path: ':flag',
+        component: InstructionComparisonValueComponent
+      },
+  ]
+  },
   { path: 'addvaluecriterion', component: AddValueCriterionComponent},
-  { path: 'instructionComparisonValueComponent', component: InstructionComparisonValueComponent },
   { path: 'pairedComparisomComponent', component: PairedComparisomComponent },
   { path: 'endTree', component: EndTreeComponent},
   { path: 'parsingcriteria', component: ParsingCriteriaComponent},

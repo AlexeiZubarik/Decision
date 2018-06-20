@@ -64,19 +64,36 @@ export class CreateAlternativeComponent implements OnInit {
     }
   }
 
+  check(name : String)
+  {
+    for(let alternativ of this.decisionArray)
+    {
+      if(alternativ.name == name)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
   create() {
     let name = this.newAlternativeName;
-    if(localStorage.getItem("currentUser")!=null)
+    if(this.check(name))
     {
-      this.decisionService.createAlternative(name).subscribe( data => 
-        {
-          this.decisionArray.push(data);
-        });
+      if(localStorage.getItem("currentUser")!=null)
+      {
+        this.decisionService.createAlternative(name).subscribe( data => 
+          {
+            this.decisionArray.push(data);
+          });
+      }
+      else{
+        this.createDecisionService.createAlternativeWithoutAuth(this.newAlternativeName);
+      }
     }
     else{
-      this.createDecisionService.createAlternativeWithoutAuth(this.newAlternativeName);
+      this.openSnackBar("Альтернатива с таким именем уже существует","");
     }
-    
   }
 
   
