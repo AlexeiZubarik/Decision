@@ -11,6 +11,8 @@ import { CreateDecisionService } from 'app/create-decision/shared/create-decisio
 })
 export class ViewTreeComponent implements OnInit {
   decision : Decision;
+  alternativeName : String = "";
+  number : number = 0;
   constructor(private router: Router,
     private decisionService: DecisionService,
     private createDecisionService: CreateDecisionService) { }
@@ -20,13 +22,28 @@ export class ViewTreeComponent implements OnInit {
     {
       this.decisionService.getDecision().subscribe(data=>{
         this.decision = data;
+        this.getTitle();
       });
     }
     else
     {
       this.decision = this.createDecisionService.getDecision();
+      this.getTitle();
     }
     
+   
+  }
+
+  getTitle()
+  {
+    for(let alternativ of this.decision.decisionArray)
+    {
+      if(alternativ.finalRate > this.number)
+      {
+        this.number = alternativ.finalRate;
+        this.alternativeName = alternativ.name;
+      }
+    }
   }
 
   changeTree()

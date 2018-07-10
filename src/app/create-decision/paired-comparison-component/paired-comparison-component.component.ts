@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material';
 export class PairedComparisonComponentComponent implements OnInit {
   answer: boolean = true;
   title="Попарное сравнение знайчений"
+  panelOpenState: boolean = false;
   array : string[];
   arrays : string[];
   counter: number = 0;
@@ -22,7 +23,7 @@ export class PairedComparisonComponentComponent implements OnInit {
   pr: number =1;
   decision: Decision;
   choose:boolean = true;
-  selectedValue: number;
+  selectedValue: number = 1;
   decisionWithCompareArray: DecisionWithCompareArray;
   compareCriteria : number[][];
   shortComapreCritria:any[];
@@ -134,6 +135,7 @@ export class PairedComparisonComponentComponent implements OnInit {
     this.shortComapreCritria = new Array();
     this.timeArray  = new Array();
     this.compareCriteria = [];
+    this.selectedValue = 1;
   }
 
   initCriteriaValueArray()

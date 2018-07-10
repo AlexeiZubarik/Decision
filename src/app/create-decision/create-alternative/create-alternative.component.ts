@@ -8,6 +8,7 @@ import { DecisionService } from 'app/services/decision.service';
 import { CreateDecisionService } from '../shared/create-decision.service';
 import { EditAlternativComponent } from 'app/create-decision/create-alternative/edit-alternativ/edit-alternativ.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { DeleteAlternativeComponent } from 'app/create-decision/create-alternative/delete-alternative/delete-alternative.component';
 
 
 @Component({
@@ -46,24 +47,7 @@ export class CreateAlternativeComponent implements OnInit {
  
   }
 
-  delete(alternative: DecisionArray) {
-    if(localStorage.getItem("currentUser")!=null)
-    {
-      this.decisionService.deleteAlternative( alternative.id).subscribe(data=>
-        {
-          if(data==1)
-          {
-            this.decisionService.getDecision().subscribe(data=>{
-            this.decisionArray = data.decisionArray;
-            });
-          }
-         });
-    }
-    else{
-      this.createDecisionService.deleteAlternativeWithoustAuth(alternative);
-    }
-  }
-
+  
   check(name : String)
   {
     for(let alternativ of this.decisionArray)
@@ -136,7 +120,31 @@ export class CreateAlternativeComponent implements OnInit {
 }
 
    
-  
+delete(alternative: DecisionArray) {
+  let dialogRef = this.dialog.open(DeleteAlternativeComponent, {
+    width: '250px',
+    data: { name: '' }
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    
+    if(localStorage.getItem("currentUser")!=null)
+    {
+      this.decisionService.deleteAlternative( alternative.id).subscribe(data=>
+        {
+          if(data==1)
+          {
+            this.decisionService.getDecision().subscribe(data=>{
+            this.decisionArray = data.decisionArray;
+            });
+          }
+         });
+    }
+    else{
+      this.createDecisionService.deleteAlternativeWithoustAuth(alternative);
+    }
+  });
+}
+
 
   editAlternative(alternative: DecisionArray): void {
     let dialogRef = this.dialog.open(EditAlternativComponent, {

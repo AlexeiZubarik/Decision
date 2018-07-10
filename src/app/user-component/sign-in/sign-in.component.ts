@@ -24,9 +24,8 @@ export class SignInComponent{
   }
   ngOnit()
   {
-    this.user._email="";
+    this.user._email = "";
     this.user._password="";
-    console.log(this.user);
   }
   checkLogin() {}
   checkPassword() {}

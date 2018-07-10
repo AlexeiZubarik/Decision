@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGuard } from 'app/services/authGuard';
+import { User } from 'app/shared/user';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,8 @@ import { AuthGuard } from 'app/services/authGuard';
 export class HeaderComponent implements OnInit {
 
   title = 'Decision';
-  
+  userName : string = "";
+  user : User  = null;
   constructor(
     public authGuard: AuthGuard,
     private router: Router) {}
@@ -29,6 +31,6 @@ export class HeaderComponent implements OnInit {
   goRegistration(){
     this.router.navigate(['usercomponent']);
   }
-  ngOnInit() {    
+  ngOnInit() { 
   }  
 }
