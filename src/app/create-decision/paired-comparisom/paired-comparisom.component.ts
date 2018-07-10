@@ -14,8 +14,9 @@ import { DecisionWithCompareArray } from 'app/shared/DecisionWithCompareArray';
 export class PairedComparisomComponent implements OnInit {
   title="Попарное сравнение критериев"
   decisionArray: DecisionArray[];
+  panelOpenState: boolean = false;
   decisionWithCompareArray: DecisionWithCompareArray;
-  selectedValue: number;
+  selectedValue: number = 1;
   decision: Decision;
   criteriaArray: CriteriaArray[];
   counter: number = 0;
@@ -47,6 +48,7 @@ export class PairedComparisomComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.selectedValue = 1;
     this.end = false;
     if(localStorage.getItem("currentUser")!=null)
     {
@@ -153,10 +155,6 @@ export class PairedComparisomComponent implements OnInit {
     else
     {
       this.saveCompare();
-      console.log(this.column);
-      console.log(this.line);
-      console.log(this.criteriaArray.length-1);
-      console.log(this.compareCriteria);
       if(this.column == this.criteriaArray.length-1)
       {
         this.line +=1;

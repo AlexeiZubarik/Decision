@@ -25,6 +25,15 @@ export class SignUpComponent  {
               private validationService:ValidationData)
   {}
 
+  ngOnit()
+  {
+    this.user._email = "";
+    this.user._password="";
+    this.user._firstName="";
+    this.user._lastName="";
+    this.user._userName="";
+  }
+
   static setErrors(answer: string) {
     return answer === null;
   }

@@ -13,6 +13,7 @@ import { PairedComparisonComponentComponent } from 'app/create-decision/paired-c
 import { EditAlternativComponent } from 'app/create-decision/create-alternative/edit-alternativ/edit-alternativ.component';
 import { EditCriteriaComponent } from 'app/create-decision/create-criterion/edit-criteria/edit-criteria.component';
 import { ParsingCriteriaComponent } from 'app/create-decision/parsing-criteria/parsing-criteria.component';
+import { DeleteAlternativeComponent } from 'app/create-decision/create-alternative/delete-alternative/delete-alternative.component';
 
 const createDecisionRoutes: Routes = [
   { path: 'createdecision',
@@ -62,6 +63,6 @@ const createDecisionRoutes: Routes = [
   exports: [
     RouterModule
   ],
-  entryComponents: [CreateAlternativeComponent, EditAlternativComponent,CreateCriterionComponent,EditCriteriaComponent],
+  entryComponents: [CreateAlternativeComponent,DeleteAlternativeComponent,EditAlternativComponent,CreateCriterionComponent,EditCriteriaComponent],
 })
 export class CreateDecisionRoutingModule { }

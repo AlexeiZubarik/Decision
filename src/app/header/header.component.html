@@ -46,6 +46,9 @@
       <li><a href="#">На главную</a></li>
       <li><a href="#">Контакты</a></li>
     </ul>
+    <div>
+      <p></p>
+    </div>
     <button class="btn-primary btn" id="login-button-header" *ngIf="authGuard.isActivate() == false" data-toggle="modal" data-target="#openModal"> <span class="glyphicon glyphicon-log-in"></span> Войти</button>
     <button class="btn-primary btn" id="login-button-header" *ngIf="authGuard.isActivate() == true" data-toggle="modal" data-target="#openLogout"> <span class="glyphicon glyphicon-log-in"></span> Выйти</button>
   
